@@ -1,0 +1,20 @@
+.select_calamviec {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    margin-top: 10px;
+}
+
+.table_calam_select{
+    background-color: ghostwhite;
+    width: 220px;
+    height: 100px;
+    margin: 6px;
+}
+.selectcalam{
+    display: none;
+}
