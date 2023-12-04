@@ -5,45 +5,41 @@ import '../../../../viewcss/qlchamcong/qlcalamviec/Cc.css';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 
 const Chamcong = () => {
-
     const [Nhansus, setNhansu] = useState([]);
     const [Chucvus, setChucvu] = useState([]);
-    const [isOverlayVisible, setIsOverlayVisible] = useState(false);
-
     const [Chamcongs, setChamcongs] = useState([])
+    const [Calams, setCalam] = useState([])
+
+    const [isOverlayVisible, setIsOverlayVisible] = useState(false);
+    const [Calams_set, setCalams_set] = useState([])
+    const [idnsedit, setIdnsedit] = useState('')
+
     useEffect(() => {
         axios.get('http://localhost:3000/nhansu')
             .then((res) => setNhansu(res.data))
             .catch(err => console.log(err));
 
         axios.get('http://localhost:3000/chucvu')
-            .then(Response => {
-                if (Response.data) {
-                    setChucvu(Response.data);
-                } else {
-                    alert(Response.data)
-                }
-            })
-            .catch(err => console.log(err));
-
+            .then(Response=>{if(Response.data) {setChucvu(Response.data);}else{alert(Response.data)}}).catch(err => console.log(err));
         axios.get('http://localhost:3000/chamcong')
-            .then(response => {
-                if (response.data) {
-                    setChamcongs(response.data);
-                } else {
-                    alert('No data found');
-                }
-            })
-            .catch(err => console.log(err));
+            .then(response =>{if(response.data){setChamcongs(response.data);}else{alert('No data found');}}).catch(err => console.log(err));
+        axios.get('http://localhost:3000/calamviec')
+            .then((res) => setCalam(res.data)).catch(err => console.log(err))
     }, [])
     //calam
-    const [Calams, setCalam] = useState([])
     useEffect(() => {
-        axios.get('http://localhost:3000/calamviec')
-            .then((res) => setCalam(res.data))
-            .catch(err => console.log(err))
-    }, [])
-
+        // Your Axios requests to fetch data
+    
+        // Assuming you've fetched Nhansus, Chucvus, Chamcongs, and Calams
+    
+        // Filtering Calams based on Chamcongs and idnsedit
+        const filteredCalams = Calams.filter(e => {
+            return Chamcongs.some(cc => cc.Idcalamviec === e._id && cc.Idns === idnsedit);
+        });
+    
+        // Update the Calams_set state with the filtered result
+        setCalams_set(filteredCalams);
+    }, [Calams, Chamcongs, idnsedit]);
     //end
     //page phan chai
     const [tranghientai, settranghientai] = useState(1);
@@ -51,9 +47,9 @@ const Chamcong = () => {
 
     const indexcuoi = tranghientai * soluongitem;
     const indexbacdau = indexcuoi - soluongitem;
-    const ACalams = Calams.slice(indexbacdau, indexcuoi);
+    const ACalams = Calams_set.slice(indexbacdau, indexcuoi);
 
-    const maxitem = Math.ceil(Calams.length / soluongitem);
+    const maxitem = Math.ceil(Calams_set.length / soluongitem);
 
     const nextPage = () => {
         if (tranghientai < maxitem) {
@@ -67,8 +63,8 @@ const Chamcong = () => {
         }
     };
     //end
-    const [idnsedit, setIdnsedit] = useState('')
-    function setidcalam(a) {
+
+    function setidnhansu(a) {
         setIdnsedit(a);
     }
 
@@ -105,8 +101,10 @@ const Chamcong = () => {
         });
         return loc;
     }
+    //******************** */
 
 
+//******************************** */
     function timkiem() {
         const [year, month, day] = sldatetime.split('-').map(Number);
         const result = timkiemcalamtheongay(day, month, year);
@@ -194,7 +192,7 @@ const Chamcong = () => {
                                 <td>
                                     <Link to={'http://localhost:3001/quanlychamcong/quanlycalamviec/chamcongcanhan/&idns=' + e._id} className='btn btn-info btn-sm me-2'>
                                         Chấm Công</Link>
-                                    <button className='btn btn-warning btn-sm' onClick={() => { hienthibang(); setidcalam(e._id); }}>
+                                    <button className='btn btn-warning btn-sm' onClick={() => {setidnhansu(e._id); hienthibang();  }}>
                                         Chấm Lại</button>
                                 </td>
                             </tr>

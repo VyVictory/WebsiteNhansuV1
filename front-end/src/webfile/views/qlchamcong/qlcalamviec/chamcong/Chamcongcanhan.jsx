@@ -9,56 +9,38 @@ const Cccanhan = () => {
     const currenturl = window.location.href;
     const timid = new URLSearchParams(currenturl);
     const idns = timid.get('idns');
-    const idcc = timid.get('idcc');
-
     const navigate = useNavigate()
     const [Nhansu, setNhansu] = useState({})
     const [Chucvus, setChucvu] = useState([])
-
     const [Chamcong, setChamcong] = useState({
         Idns: idns,
         Idcalamviec: '',
         Thoigianlam: '',
         luong: ''
     })
-    const [Chamcongedit, setChamcongedit] = useState({
-        Idns: '',
-        Idcalamviec: '',
-        Thoigianlam: '',
-        luong: ''
-    })
     useEffect(() => {
         axios.get("http://localhost:3000/nhansu/" + idns)
-            .then(Response => {
-                if (Response.data) {
-                    setNhansu(Response.data);
-                } else {
-                    alert(Response.data)
-                }
-            })
-            .catch(err => console.log(err))
-
-        axios.get("http://localhost:3000/chamcong/" + idcc)
-            .then((Response) => setChamcongedit(Response.data))
-            .catch(err => console.log(err));
-
+            .then(Response => {if(Response.data){setNhansu(Response.data);}else{alert(Response.data)}}).catch(err => console.log(err))
         axios.get('http://localhost:3000/chucvu')
-            .then(response => {
-                if (response.data) {
-                    setChucvu(response.data);
-                } else {
-                    alert('No data found');
-                }
-            })
-            .catch(err => console.log(err));
+            .then(response => {if(response.data) {setChucvu(response.data);}else{alert('No data found');}}).catch(err => console.log(err));
     }, [])
-
     const [Calams, setCalam] = useState([])
+    const [chamcongid, setChamcongid] = useState([])
+    const [Calams_notset, setCalams_notset] = useState([])
     useEffect(() => {
         axios.get('http://localhost:3000/calamviec')
-            .then((res) => setCalam(res.data))
-            .catch(err => console.log(err))
+            .then((res) => setCalam(res.data)).catch(err => console.log(err))
+        axios.get('http://localhost:3000/chamcong/')
+            .then(response =>{if(response.data){setChamcongid(response.data);}else{alert('No data found');}}).catch(err => console.log(err));
     }, [])
+
+    useEffect(() => {
+        const filteredCalams = Calams.filter(cl => {
+            const found = chamcongid.some(cc => cc.Idcalamviec === cl._id && cc.Idns ===idns );
+            return !found;
+        });
+        setCalams_notset(filteredCalams);
+    }, [Calams, chamcongid]);
 
     function luu() {
         const dataToSend = {
@@ -68,34 +50,25 @@ const Cccanhan = () => {
             luong: Chamcong.luong
         };
         axios.post('http://localhost:3000/chamcong', dataToSend)
-            .then(_res => {
-                navigate('/quanlycongtacnhanvien/quanlyvitri')
-            })
-            .catch(err => console.log(err));
+            .then(_res => {navigate('/quanlycongtacnhanvien/quanlyvitri')}).catch(err => console.log(err));
     }
     const [selectcl, setSelectcl] = useState([])
-
     const [tranghientai, settranghientai] = useState(1);
     const soluongitem = 9;
-
     const indexcuoi = tranghientai * soluongitem;
     const indexbacdau = indexcuoi - soluongitem;
-    const ACalams = Calams.slice(indexbacdau, indexcuoi);
-
-    const maxitem = Math.ceil(Calams.length / soluongitem);
-
+    const ACalams = Calams_notset.slice(indexbacdau, indexcuoi);
+    const maxitem = Math.ceil(Calams_notset.length / soluongitem);
     const nextPage = () => {
         if (tranghientai < maxitem) {
             settranghientai(tranghientai + 1);
         }
     };
-
     const prevPage = () => {
         if (tranghientai > 1) {
             settranghientai(tranghientai - 1);
         }
     };
-
     const [isButtonClicked, setIsButtonClicked] = useState(false);
     const [sldatetime, setsldatetime] = useState('');
     const handleDateChange = (event) => {
@@ -110,12 +83,9 @@ const Cccanhan = () => {
                 const namMatches = item.Nam === nam;
                 return ngayMatches || thangMatches || namMatches;
             }
-
         });
         return loc;
     }
-
-
     function timkiem() {
         const [year, month, day] = sldatetime.split('-').map(Number);
         const result = timkiemcalamtheongay(day, month, year);
@@ -138,12 +108,8 @@ const Cccanhan = () => {
     }
     useEffect(() => {
         axios.get("http://localhost:3000/calamviec/" + Chamcong.Idcalamviec)
-            .then((Response) => setSelectcl(Response.data))
-            .catch(err => console.log(err));
-
+        .then((Response) => setSelectcl(Response.data)).catch(err => console.log(err));
     }, [Chamcong.Idcalamviec]);
-    // code input value
-
     return (
         <div>Chấm Công Cho : <span>{Nhansu.Hoten}</span><br />
             {Chucvus.map((cv) => {
