@@ -18,10 +18,13 @@ const Qlthongtinnhanvien= () =>{
 
     const handleDelete = (id) =>{
         axios.delete("http://localhost:3000/nhansu/"+ id)
-        .then(res => {if(res.data){navigate('/quanlythongtinnhanvien')}else(alert(res.data)
+        .then(res => {if(res.data){setNhansu(Nhansus.filter(ns => ns._id !== id));navigate('/quanlythongtinnhanvien')}else(alert(res.data)
         )})
     }
     const [isButtonClicked, setIsButtonClicked] = useState(false);
+    function resettimkiem() {
+        setIsButtonClicked(false);
+    }
     const [loc, setLoc] = useState([]);
     const[tutim, setTutim]=useState({
         tutim:''
@@ -31,51 +34,53 @@ const Qlthongtinnhanvien= () =>{
     });
       
     const handleTim = () => {
+        const a = tutim.tutim ? tutim.tutim + '' : 'Hoten';
         const filteredNhansus = Nhansus.filter(ns => {
-            // Kiểm tra kiểu dữ liệu và sử dụng includes nếu cả hai là chuỗi
-            const a = tutim.tutim +'';
-            const b = ns[selectedOption.selecto]+'';
-    
+            const b = ns[selectedOption.selecto] + '';
             if (typeof a === 'string' && typeof b === 'string') {
                 return b.includes(a);
             }   
-            return false; // Trả về false nếu không phải chuỗi hoặc không có trường dữ liệu
+            return false;
         });
-    
         setLoc(filteredNhansus);
         setIsButtonClicked(true);
     };
+    const tieudedanhsach=()=>{
+        return <thead>
+                    <tr>
+                        <th>Hoten</th>
+                        <th>Cccd</th>
+                        <th>Mnv</th>
+                        <th>Sdt</th>
+                        <th>luong</th>
+                        <th>Chucvu </th> 
+                        <th> Tuy chon </th>
+                    </tr>
+                </thead>
+    }
     return ( 
         <div>
             <Link to="/ThemNhanvien" className='btn btn-success'>
                 Thêm nhân viên
             </Link><div></div>
             <div>
-                <select onChange={(e)=> setSelectedOption({...selectedOption, selecto: e.target.value})}>
-                    <option value="Hoten">Họ Tên</option>
+                <select onChange={(e) => setSelectedOption({...selectedOption, selecto: e.target.value})}>
+                    <option value=''>Chọn một trường</option>
                     <option value="Hoten">Họ Tên</option>
                     <option value="Cccd">Cccd</option>
                     <option value="Mnv">Mnv</option>
                     <option value="Sdt">Sdt</option>
                     <option value="luong">Luong</option>
                 </select>
+
                 <input type='text' onChange={(e)=> setTutim({...tutim, tutim: e.target.value})} placeholder='từ khóa tìm'></input>
                 <button onClick={handleTim}>Tìm</button>
+                <button onClick={resettimkiem}>reset</button>
             </div>
 
             {isButtonClicked ? (
                                 <table className='table'>
-                                <thead>
-                                    <tr>
-                                        <th>Hoten</th>
-                                        <th>Cccd</th>
-                                        <th>Mnv</th>
-                                        <th>Sdt</th>
-                                        <th>luong</th>
-                                        <th>Chucvu </th> 
-                                        <th> Tuy chon </th>
-                                    </tr>
-                                </thead>
+                                    {tieudedanhsach()}
                                 <tbody>
                                     {
                                        loc.map(e => {
@@ -98,17 +103,7 @@ const Qlthongtinnhanvien= () =>{
                             </table>
                                ) : (
                                 <table className='table'>
-                                <thead>
-                                    <tr>
-                                        <th>Hoten</th>
-                                        <th>Cccd</th>
-                                        <th>Mnv</th>
-                                        <th>Sdt</th>
-                                        <th>luong</th>
-                                        <th>Chucvu </th> 
-                                        <th> Tuy chon </th>
-                                    </tr>
-                                </thead>
+                                    {tieudedanhsach()}
                                 <tbody>
                                     {
                                        Nhansus.map(e => {

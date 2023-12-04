@@ -112,6 +112,30 @@ const Chamcong = () => {
                 <tr>Thời gian làm:{start + "H-" + end}H</tr><div></div>
         </button>
     }
+   // const [isButtonClicked, setIsButtonClicked] = useState(false);
+   function resettimkiem() {
+       setIsButtonClicked(false);
+   }
+   const [locnhansu, setLocnhansu] = useState([]);
+   const[tutim, setTutim]=useState({
+       tutim:''
+   })
+   const [selectedOption, setSelectedOption] = useState({
+       selecto: ''
+   });
+     
+   const handleTim = () => {
+       const a = tutim.tutim ? tutim.tutim + '' : 'Hoten';
+       const filteredNhansus = Nhansus.filter(ns => {
+           const b = ns[selectedOption.selecto] + '';
+           if (typeof a === 'string' && typeof b === 'string') {
+               return b.includes(a);
+           }   
+           return false;
+       });
+       setLocnhansu(filteredNhansus);
+       setIsButtonClicked(true);
+   };
     return (
         <div>
             <Link to="/quanlychamcong/quanlycalamviec/xaydungcalamviec/themcalamviec" className='btn btn-success'>
@@ -140,7 +164,17 @@ const Chamcong = () => {
                     </div>
                 </div>
             </div>
+            <div>
+                <select onChange={(e) => setSelectedOption({...selectedOption, selecto: e.target.value})}>
+                    <option value=''>Chọn một trường</option>
+                    <option value="Hoten">Họ Tên</option>
+                    <option value="Mnv">Mnv</option>
+                </select>
 
+                <input type='text' onChange={(e)=> setTutim({...tutim, tutim: e.target.value})} placeholder='từ khóa tìm'></input>
+                <button onClick={handleTim}>Tìm</button>
+                <button onClick={resettimkiem}>reset</button>
+            </div>
             <table className='table'>
                 <thead>
                     <tr>
@@ -153,24 +187,41 @@ const Chamcong = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {
-                        Nhansus.map(e => {
-                            const correspondingChucvu = Chucvus.find((cv) => cv._id === e.Chucvu);
-                            return <tr >
-                                <td>{e.Mnv}</td>
-                                <td>{e.Hoten}</td>
-                                <td>{correspondingChucvu ? correspondingChucvu.Tenchucvu : '-'}</td>
-                                <td></td>
+                {isButtonClicked ? (
+                    locnhansu.map(e => {
+                        const correspondingChucvu = Chucvus.find((cv) => cv._id === e.Chucvu);
+                        return <tr >
+                            <td>{e.Mnv}</td>
+                            <td>{e.Hoten}</td>
+                            <td>{correspondingChucvu ? correspondingChucvu.Tenchucvu : '-'}</td>
+                            <td></td>
 
-                                <td>
-                                    <Link to={'http://localhost:3001/quanlychamcong/quanlycalamviec/chamcongcanhan/&idns=' + e._id} className='btn btn-info btn-sm me-2'>
-                                        Chấm Công</Link>
-                                    <button className='btn btn-warning btn-sm' onClick={() => { setIdnsedit(e._id); hienthibang(); }}>
-                                        Chấm Lại</button>
-                                </td>
-                            </tr>
-                        })
-                    }
+                            <td>
+                                <Link to={'http://localhost:3001/quanlychamcong/quanlycalamviec/chamcongcanhan/&idns=' + e._id} className='btn btn-info btn-sm me-2'>
+                                    Chấm Công</Link>
+                                <button className='btn btn-warning btn-sm' onClick={() => { setIdnsedit(e._id); hienthibang(); }}>
+                                    Chấm Lại</button>
+                            </td>
+                        </tr>
+                    })
+                ):(
+                    Nhansus.map(e => {
+                        const correspondingChucvu = Chucvus.find((cv) => cv._id === e.Chucvu);
+                        return <tr >
+                            <td>{e.Mnv}</td>
+                            <td>{e.Hoten}</td>
+                            <td>{correspondingChucvu ? correspondingChucvu.Tenchucvu : '-'}</td>
+                            <td></td>
+
+                            <td>
+                                <Link to={'http://localhost:3001/quanlychamcong/quanlycalamviec/chamcongcanhan/&idns=' + e._id} className='btn btn-info btn-sm me-2'>
+                                    Chấm Công</Link>
+                                <button className='btn btn-warning btn-sm' onClick={() => { setIdnsedit(e._id); hienthibang(); }}>
+                                    Chấm Lại</button>
+                            </td>
+                        </tr>
+                    })
+                )}
                 </tbody>
             </table>
         </div>
