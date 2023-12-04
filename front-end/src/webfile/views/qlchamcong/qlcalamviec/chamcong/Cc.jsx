@@ -17,9 +17,7 @@ const Chamcong = () => {
     const navigate = useNavigate()
     useEffect(() => {
         axios.get('http://localhost:3000/nhansu')
-            .then((res) => setNhansu(res.data))
-            .catch(err => console.log(err));
-
+            .then((res) => setNhansu(res.data)).catch(err => console.log(err));
         axios.get('http://localhost:3000/chucvu')
             .then(Response => { if (Response.data) { setChucvu(Response.data); } else { alert(Response.data) } }).catch(err => console.log(err));
         axios.get('http://localhost:3000/chamcong')

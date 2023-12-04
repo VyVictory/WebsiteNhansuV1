@@ -53,25 +53,25 @@ const ThemNhanvien = () => {
             <h3 className=''>Them Nhanvien</h3>
             <form className='' onSubmit={handleSubmit}>
                 <div className=''>
-                    <label for="inputTen" className="" htmlFor="Hoten">Ho Ten:</label>
+                    <label className="" >Ho Ten:</label>
                 <input type="text" placeholder='Nhap Hoten' onChange ={(e) => setNhansu({...Nhansu, Hoten: e.target.value})} required/> </div>
 
                 <div className=''>
-                    <label for="inputCCCD" className="" htmlFor="CCCD">CCCD:</label>
+                    <label className="" >CCCD:</label>
                 <input type="number" placeholder='Nhap CCCD' onChange ={(e) => setNhansu({...Nhansu, Cccd: e.target.value})} required/> </div>
 
                 <div className=''>
-                    <label for="inputID" className="" htmlFor="Mnv">Ma nhan vien:</label>
+                    <label className="" >Ma nhan vien:</label>
                 <input type="text" placeholder='Nhap Mnv' onChange ={(e) => setNhansu({...Nhansu, Mnv: e.target.value})} required/> </div>
 
                 <div className=''>
-                    <label for="inputSdt" className="" htmlFor="SDT">SDT:</label>
+                    <label className="" >SDT:</label>
                 <input type="number" placeholder='Nhap SDT' onChange ={(e) => setNhansu({...Nhansu, Sdt: e.target.value})} required/> </div>
     
-                <label for="inputLuong" className="">Luong:</label>
+                <label className="">Luong:</label>
                 <input type="number" placeholder='Nhap Luong' className='' onChange ={(e) => setNhansu({...Nhansu, luong: e.target.value})} required/> 
                 <div className=''>
-                    <label for="inputChucvu" className="" >Chuc vu:</label>
+                    <label className="" >Chuc vu:</label>
                     <select name="Chucvu" id="Chucvu" className='' onChange={(e) => setNhansu({ ...Nhansu, Chucvu: e.target.value })}>
                         {Chucvu.map((cv) => (
                             <option key={cv._id} value={cv._id}>{cv.Tenchucvu}</option>
