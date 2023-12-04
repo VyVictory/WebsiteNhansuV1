@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 const ThemNhanvien = () => {
     const [Calam, setCalam] = useState({
-        Tencalam:'',
+        Tencalam:'',    
         Starttime:'',
         Endtime:'',
     })
@@ -24,12 +24,17 @@ const ThemNhanvien = () => {
             Thang: Day.Thang,
             Nam: Day.Nam
         };          
-        axios.post('http://localhost:3000/calamviec', dataToSend)
-        .then(_res =>{
-            navigate('/quanlychamcong/quanlycalamviec/xaydungcalamviec')
-        })
-        
-        .catch(err => console.log(err));
+        if(dataToSend.Nam>999){
+            alert("vui lòng kiểm tra lại năm");
+        }
+        else{
+            axios.post('http://localhost:3000/calamviec', dataToSend)
+            .then(_res =>{
+                navigate('/quanlychamcong/quanlycalamviec/xaydungcalamviec')
+            })
+            .catch(err => console.log(err));
+        }
+
 	}
     const [sldatetime, setsldatetime] = useState('');
     const handleDateChange = (event) => {

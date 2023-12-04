@@ -27,12 +27,17 @@ const Chinhsua = () => {
             Ngay: Calam.Ngay,
             Thang: Calam.Thang,
             Nam: Calam.Nam
-        };          
-        axios.put('http://localhost:3000/calamviec/'+ idcl ,dataToSend)
-        .then(_res =>{
-            navigate('/quanlychamcong/quanlycalamviec/xaydungcalamviec')
-        })
-        .catch(err => console.log(err));
+        };    
+        if(dataToSend.Nam>999){
+            alert("vui lòng kiểm tra lại năm");
+        }
+        else{      
+            axios.put('http://localhost:3000/calamviec/'+ idcl ,dataToSend)
+            .then(_res =>{
+                navigate('/quanlychamcong/quanlycalamviec/xaydungcalamviec')
+            })
+            .catch(err => console.log(err));
+        }
 	}
     useEffect(() => {
         axios.get("http://localhost:3000/calamviec/"+ idcl)
