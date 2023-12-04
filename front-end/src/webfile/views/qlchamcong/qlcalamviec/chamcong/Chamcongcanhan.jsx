@@ -191,8 +191,8 @@ const Cccanhan = () => {
             <button className='select_calam' onClick={hienthibang}>
                 Chọn Ca Làm Việc
             </button><br/>
-            thời gian làm việc: <input type="number" value={Chamcongedit.Thoigianlam} onChange={(e) => setChamcong({ ...Chamcong, Thoigianlam: e.target.value })} placeholder='thời gian làm việc(giờ)' className='' required /> <br />
-            Lương: <input type="number" value={Chamcongedit.luong} onChange={(e) => setChamcong({ ...Chamcong, luong: e.target.value })} placeholder='Nhập Lương (VND)' className='' required />
+            thời gian làm việc: <input type="number" onChange={(e) => setChamcong({ ...Chamcong, Thoigianlam: e.target.value })} placeholder='thời gian làm việc(giờ)' className='' required /> <br />
+            Lương: <input type="number" onChange={(e) => setChamcong({ ...Chamcong, luong: e.target.value })} placeholder='Nhập Lương (VND)' className='' required />
             <br/>
             <button className='' onClick={luu}>Lưu</button>
 
