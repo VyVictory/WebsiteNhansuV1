@@ -1,0 +1,36 @@
+.select_calamviec {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    margin-top: 10px;
+}
+
+.table_calam_select{
+    background-color: ghostwhite;
+    width: 220px;
+    height: 100px;
+    margin-left: -6px;
+    margin-right: -6px;
+    margin-top: -1px;
+    margin: 10px;
+}
+.selectcalam{
+    display: none;
+}
+.centeredTable {
+    margin-top: 20px;
+    text-align: center;
+}
+.overlay {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+  }
