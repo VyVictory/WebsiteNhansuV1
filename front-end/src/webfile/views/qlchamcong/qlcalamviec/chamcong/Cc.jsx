@@ -14,43 +14,33 @@ const Chamcong = () => {
     const [Calams_set, setCalams_set] = useState([])
     const [idnsedit, setIdnsedit] = useState('')
 
+    const navigate = useNavigate()
     useEffect(() => {
         axios.get('http://localhost:3000/nhansu')
             .then((res) => setNhansu(res.data))
             .catch(err => console.log(err));
 
         axios.get('http://localhost:3000/chucvu')
-            .then(Response=>{if(Response.data) {setChucvu(Response.data);}else{alert(Response.data)}}).catch(err => console.log(err));
+            .then(Response => { if (Response.data) { setChucvu(Response.data); } else { alert(Response.data) } }).catch(err => console.log(err));
         axios.get('http://localhost:3000/chamcong')
-            .then(response =>{if(response.data){setChamcongs(response.data);}else{alert('No data found');}}).catch(err => console.log(err));
+            .then(response => { if (response.data) { setChamcongs(response.data); } else { alert('No data found'); } }).catch(err => console.log(err));
         axios.get('http://localhost:3000/calamviec')
             .then((res) => setCalam(res.data)).catch(err => console.log(err))
     }, [])
     //calam
     useEffect(() => {
-        // Your Axios requests to fetch data
-    
-        // Assuming you've fetched Nhansus, Chucvus, Chamcongs, and Calams
-    
-        // Filtering Calams based on Chamcongs and idnsedit
         const filteredCalams = Calams.filter(e => {
             return Chamcongs.some(cc => cc.Idcalamviec === e._id && cc.Idns === idnsedit);
         });
-    
-        // Update the Calams_set state with the filtered result
         setCalams_set(filteredCalams);
     }, [Calams, Chamcongs, idnsedit]);
-    //end
     //page phan chai
     const [tranghientai, settranghientai] = useState(1);
     const soluongitem = 9;
-
     const indexcuoi = tranghientai * soluongitem;
     const indexbacdau = indexcuoi - soluongitem;
     const ACalams = Calams_set.slice(indexbacdau, indexcuoi);
-
     const maxitem = Math.ceil(Calams_set.length / soluongitem);
-
     const nextPage = () => {
         if (tranghientai < maxitem) {
             settranghientai(tranghientai + 1);
@@ -62,16 +52,9 @@ const Chamcong = () => {
             settranghientai(tranghientai - 1);
         }
     };
-    //end
-
-    function setidnhansu(a) {
-        setIdnsedit(a);
-    }
-
     function hienthibang() {
         setIsOverlayVisible(true);
     }
-
     function tacbang() {
         setIsOverlayVisible(false);
     }
@@ -83,7 +66,6 @@ const Chamcong = () => {
         setLoc(result);
         setIsButtonClicked(true);
     }
-    function offtimkiem() { setIsButtonClicked(false); }
     const [sldatetime, setsldatetime] = useState('');
     const handleDateChange = (event) => {
         setsldatetime(event.target.value);
@@ -97,39 +79,39 @@ const Chamcong = () => {
                 const namMatches = item.Nam === nam;
                 return ngayMatches || thangMatches || namMatches;
             }
-
         });
         return loc;
     }
-    //******************** */
-
-
-//******************************** */
     function timkiem() {
         const [year, month, day] = sldatetime.split('-').map(Number);
         const result = timkiemcalamtheongay(day, month, year);
         setLoc(result);
         setIsButtonClicked(true);
     }
-    function offtimkiem() {
+    function resettimkiem() {
         setIsButtonClicked(false);
     }
     // const navigate = useNavigate()
-  
+
     //next edit
-    const navigate = useNavigate()
+
     function next_edit_chamcong(a) {
-                    let matchingId = '';
-                    Chamcongs.forEach((e) => {
-                        if (e.Idcalamviec === a && e.Idns === idnsedit) {
-                            matchingId = e._id;
-                        }
-                    });
-    
-                    navigate('/quanlychamcong/quanlycalamviec/Chinhsuacc/&idns=' + idnsedit + '&idcc=' + matchingId + '&idcl='+a);
+        let matchingId = '';
+        Chamcongs.forEach((e) => {
+            if (e.Idcalamviec === a && e.Idns === idnsedit) {
+                matchingId = e._id;
+            }
+        });
+        navigate('/quanlychamcong/quanlycalamviec/Chinhsuacc/&idns=' + idnsedit + '&idcc=' + matchingId + '&idcl=' + a);
     }
     //********** */
-
+    function motcalamviec(id, ten, start, end, ngay, thang, nam) {
+        return <button className='table_calam_select onClick={() => { next_edit_chamcong(id); tacbang(); }}'>
+                <tr>tên ca:{ten}</tr><div></div>
+                <tr>daytime:{ngay}/{thang}/{nam}</tr><div></div>
+                <tr>Thời gian làm:{start + "H-" + end}H</tr><div></div>
+        </button>
+    }
     return (
         <div>
             <Link to="/quanlychamcong/quanlycalamviec/xaydungcalamviec/themcalamviec" className='btn btn-success'>
@@ -141,22 +123,14 @@ const Chamcong = () => {
                     <div className="centeredTable">
                         <span>Dòng chữ trong bảng</span><button onClick={tacbang}>Tắt bảng</button><br />
                         <input type="date" id='inputngaytim' value={sldatetime} onChange={handleDateChange} required></input> <button onClick={timkiem}>Tìm</button>
-                        <button onClick={offtimkiem}>reset</button><br />
+                        <button onClick={resettimkiem}>reset</button><br />
                         {isButtonClicked ? (
                             loc.map(e => {
-                                return <button onClick={() => { next_edit_chamcong(e._id); tacbang(); }} className='table_calam_select'>
-                                    <tr>tên ca:{e.Tencalam}</tr><div></div>
-                                    <tr>daytime:{e.Ngay}/{e.Thang}/{e.Nam}</tr><div></div>
-                                    <tr>Thời gian làm:{e.Starttime + "H-" + e.Endtime}H</tr><div></div>
-                                </button>
+                                return motcalamviec(e._id, e.Tencalam, e.Starttime, e.Endtime, e.Ngay, e.Thang, e.Nam)
                             })
                         ) : (
                             ACalams.map(e => {
-                                return <button onClick={() => { next_edit_chamcong(e._id); tacbang(); }} className='table_calam_select'>
-                                    <tr>tên ca:{e.Tencalam}</tr><div></div>
-                                    <tr>daytime:{e.Ngay}/{e.Thang}/{e.Nam}</tr><div></div>
-                                    <tr>Thời gian làm :{e.Starttime}H-{e.Endtime}H</tr><div></div>
-                                </button>
+                                return motcalamviec(e._id, e.Tencalam, e.Starttime, e.Endtime, e.Ngay, e.Thang, e.Nam)
                             })
                         )
                         }
@@ -181,7 +155,6 @@ const Chamcong = () => {
                 <tbody>
                     {
                         Nhansus.map(e => {
-
                             const correspondingChucvu = Chucvus.find((cv) => cv._id === e.Chucvu);
                             return <tr >
                                 <td>{e.Mnv}</td>
@@ -192,7 +165,7 @@ const Chamcong = () => {
                                 <td>
                                     <Link to={'http://localhost:3001/quanlychamcong/quanlycalamviec/chamcongcanhan/&idns=' + e._id} className='btn btn-info btn-sm me-2'>
                                         Chấm Công</Link>
-                                    <button className='btn btn-warning btn-sm' onClick={() => {setidnhansu(e._id); hienthibang();  }}>
+                                    <button className='btn btn-warning btn-sm' onClick={() => { setIdnsedit(e._id); hienthibang(); }}>
                                         Chấm Lại</button>
                                 </td>
                             </tr>
