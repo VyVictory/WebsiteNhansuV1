@@ -1,7 +1,6 @@
 import {BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "../views/home/Home";
 import {useEffect, useState } from 'react';
-import { AllProvider } from './Alltext';
 //import Login from "../views/Login/Login";
 //<Route path="/home" element={<Home/>} /> 
 import Qlthongtinnhanvien from "../views/qlhoso/qlthongtinnhanvien/Qlthongtinnhanvien";
@@ -62,7 +61,6 @@ function Routers(){
                         </Routes>
                     </div>
                 </Router>
-            
                 ) : (
                 <div>
                     <Login />

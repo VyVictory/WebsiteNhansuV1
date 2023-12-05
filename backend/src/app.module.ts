@@ -9,7 +9,7 @@ import { ChucvuModule } from './chucvu/chucvu.module';
 import { CalamviecModule } from 'calamviec/calamviec.module';
 import { ChamcongModule } from 'chamcong/chamcong.module';
 import { ConfigModule } from '@nestjs/config';
-import { RoleModule } from 'role/role.module';
+//import { RoleModule } from 'role/role.module';
 import { AccountModule } from 'account/account.module';
 @Module({
   imports: [ConfigModule.forRoot({
@@ -17,7 +17,7 @@ import { AccountModule } from 'account/account.module';
     isGlobal:true,
   }),
   MongooseModule.forRoot('mongodb://127.0.0.1:27017/doan1'),
-    NhansuModule, ChucvuModule, CalamviecModule, ChamcongModule, RoleModule, AccountModule],
+    NhansuModule, ChucvuModule, CalamviecModule, ChamcongModule, AccountModule],
   controllers: [AppController],
   providers: [AppService],
 })

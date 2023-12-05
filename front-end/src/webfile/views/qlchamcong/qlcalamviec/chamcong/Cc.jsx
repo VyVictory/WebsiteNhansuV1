@@ -104,7 +104,7 @@ const Chamcong = () => {
     }
     //********** */
     function motcalamviec(id, ten, start, end, ngay, thang, nam) {
-        return <button className='table_calam_select onClick={() => { next_edit_chamcong(id); tacbang(); }}'>
+        return <button className='table_calam_select' onClick={() => { next_edit_chamcong(id); tacbang(); }}>
                 <tr>tên ca:{ten}</tr><div></div>
                 <tr>daytime:{ngay}/{thang}/{nam}</tr><div></div>
                 <tr>Thời gian làm:{start + "H-" + end}H</tr><div></div>

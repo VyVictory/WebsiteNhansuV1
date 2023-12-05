@@ -24,7 +24,6 @@ const Xdcalamviec = () => {
             }
         })
     }
-
     return ( 
         <div>
             <Link to="/quanlychamcong/quanlycalamviec/xaydungcalamviec/themcalamviec" className='btn btn-success'>

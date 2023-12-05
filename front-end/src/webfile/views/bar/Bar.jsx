@@ -5,6 +5,7 @@ const Bar = () => {
         sessionStorage.setItem('loggedIn', 'false');
         window.location.reload();
     }
+    const loggedInUserId = sessionStorage.getItem('Uid');
     return ( 
         <div className="Bar">
 
@@ -85,7 +86,7 @@ const Bar = () => {
                     </li>
             </div>
             <div className="rightbar">
-                xin chao:
+                xin chao:{loggedInUserId}
                 <button onClick={handleSubmitLogout}>Logout</button>
             </div>
         </div>

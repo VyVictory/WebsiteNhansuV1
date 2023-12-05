@@ -1,9 +1,7 @@
 const Xbluongtheomau = () => {
-    return ( 
-        <div>
-            xuatban luong theo mau
-        </div>
-     );
+    return (
+        <div></div>
+    );
 }
- 
+
 export default Xbluongtheomau;

@@ -1,11 +1,11 @@
-import { Role } from './../role/role.schema';
+//import { Role } from './../role/role.schema';
 // thongtinnhansu.schema.ts
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
 @Schema()
 export class Account extends Document {
-  @Prop()
+  @Prop() 
   User: string;
 
   @Prop()
@@ -14,8 +14,11 @@ export class Account extends Document {
   @Prop()
   Password:string;
 
-  @Prop({ type: 'ObjectId', ref: 'Idns' })
-  Idrole: Role;
+  @Prop()
+  Quyenhang:string;
+
+  @Prop()
+  Quyentruyvan:string
 
 }
 
