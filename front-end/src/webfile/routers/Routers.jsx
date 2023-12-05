@@ -23,6 +23,7 @@ import Chinhsua from "../views/qlhoso/qlthongtinnhanvien/Chinhsua";
 import Chinhsuachucvu from "../views/qlhoso/quanlycongtacnhanvien/qlvitri/Chinhsuachucvu";
 import ThemCalamviec from "../views/qlchamcong/qlcalamviec/xdcalamviec/ThemCalamviec";
 import Login from "../login/login";
+import Captaikhoan from "../views/qlhoso/quanlycongtacnhanvien/Captaikhoan";
 
 function Routers(){
     const [onevent, setOnevent] = useState(false);
@@ -32,6 +33,7 @@ function Routers(){
             setOnevent(true);
         }
     }, []);
+    
     return onevent ? (  
                 <Router> 
                     <Bar/>
@@ -57,7 +59,8 @@ function Routers(){
 
                             <Route path="/tinhluong" element={<Tl/>}/>
                             <Route path="/xuatbangluongtheomau" element={<Xbluongtheomau/>}/>
-                        
+
+                            <Route path="/captaikhoan" element={<Captaikhoan/>}/>
                         </Routes>
                     </div>
                 </Router>

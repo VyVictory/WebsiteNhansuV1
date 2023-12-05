@@ -24,7 +24,7 @@ const ThemNhanvien = () => {
             Thang: Day.Thang,
             Nam: Day.Nam
         };          
-        if(dataToSend.Nam>999){
+        if(dataToSend.Nam>9999){
             alert("vui lòng kiểm tra lại năm");
         }
         else{

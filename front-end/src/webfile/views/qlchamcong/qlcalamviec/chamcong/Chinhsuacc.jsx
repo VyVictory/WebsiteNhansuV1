@@ -60,9 +60,11 @@ const Chinhsuacc = () => {
                 <tr>daytime:{calam.Ngay}/{calam.Thang}/{calam.Nam}</tr><div></div>
                 <tr>Thời gian làm:{calam.Starttime+"H-"+calam.Endtime}H</tr><div></div>
             </div>
+            <form onSubmit={luu}>
             thời gian làm việc: <input type="number" value={dataToSend.Thoigianlam} onChange={(e) => setChamcong({ ...Chamcong, Thoigianlam: e.target.value })} placeholder='thời gian làm việc(giờ)' className='' required /> <br/>
             Lương: <input type="number" value={dataToSend.luong} onChange={(e) => setChamcong({ ...Chamcong, luong: e.target.value })} placeholder='Nhập Lương (VND)' className='' required/>    
-            <button className='' onClick={luu}>Chấm lại</button>
+            <button className='' >Chấm lại</button>
+            </form>
         </div>
      );
 }

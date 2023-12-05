@@ -16,7 +16,7 @@ const Login = () => {
         Email: '',
         Password: '',
         Passwordd: '',
-        Quyenhang: 'admin',
+        Quyenhang: '0',
         Quyentruyvan: 'admin',
     })
     useEffect(() => {
@@ -47,7 +47,7 @@ const Login = () => {
 
     const handleSubmitLogin = (event) => {
         event.preventDefault();
-        
+
         taikhoan.forEach((e) => {
             if (username === e.User) {
                 comparePasswords(password, e.Password)
@@ -55,6 +55,9 @@ const Login = () => {
                         if (isMatch) {
                             sessionStorage.setItem('loggedIn', 'true');
                             sessionStorage.setItem('Uid', e._id);
+                            sessionStorage.setItem('UUser', e.User);
+                            sessionStorage.setItem('UQuyenhang', e.Quyenhang);
+                            sessionStorage.setItem('UQuyentruyvan', e.Quyentruyvan);
                             window.location.reload();
                         } else {
                             alert("mật khẩu không chính xác");
@@ -63,7 +66,7 @@ const Login = () => {
                     .catch((err) => {
                         console.error('Lỗi:', err);
                     });
-            }else{
+            } else {
                 alert("Tên người dùng hoặc mật khẩu không chính xác");
             }
         });
@@ -96,40 +99,40 @@ const Login = () => {
     function formdangky() {
         return (
             <div className='signup-page'>
-            <div className='signup-form-container' style={{ display: showLoginForm ? 'none' : 'block' }}>
-                <h1 className='title'> SignUp Account</h1>
-                <div>
-                    <div className='mb-2'>
-                        <label htmlFor='user' className='form-lable'>User</label>
-                        <input required value={dangky.User} onChange={(e) => setDangky({ ...dangky, User: e.target.value })} id='user' className='form-control' type='text' name='user' ></input>
-                    </div>
+                <div className='signup-form-container' style={{ display: showLoginForm ? 'none' : 'block' }}>
+                    <h1 className='title'> SignUp Account</h1>
+                    <div>
+                        <div className='mb-2'>
+                            <label htmlFor='user' className='form-lable'>User</label>
+                            <input required value={dangky.User} onChange={(e) => setDangky({ ...dangky, User: e.target.value })} id='user' className='form-control' type='text' name='user' ></input>
+                        </div>
 
-                    <div className='mb-2'>
-                        <label htmlFor='email' className='form-lable'>email</label>
-                        <input required value={dangky.Email} onChange={(e) => setDangky({ ...dangky, Email: e.target.value })} id='email' className='form-control' type='email' name='email' ></input>
-                    </div>
+                        <div className='mb-2'>
+                            <label htmlFor='email' className='form-lable'>email</label>
+                            <input required value={dangky.Email} onChange={(e) => setDangky({ ...dangky, Email: e.target.value })} id='email' className='form-control' type='email' name='email' ></input>
+                        </div>
 
-                    <div className='mb-2'>
-                        <label htmlFor='password' className='form-lable'>Password</label>
-                        <input required value={dangky.Password} onChange={(e) => setDangky({ ...dangky, Password: e.target.value })} id='Password' className='form-control' type='text' name='passwowrd' ></input>
-                    </div>
+                        <div className='mb-2'>
+                            <label htmlFor='password' className='form-lable'>Password</label>
+                            <input required value={dangky.Password} onChange={(e) => setDangky({ ...dangky, Password: e.target.value })} id='Password' className='form-control' type='text' name='passwowrd' ></input>
+                        </div>
 
-                    <div className='mb-2'>
-                        <label htmlFor='confim-password' className='form-lable'>Confim Password</label>
-                        <input required value={dangky.Passwordd} onChange={(e) => setDangky({ ...dangky, Passwordd: e.target.value })} id='confim-password' className='form-control' type='text' name='confimPassword' ></input>
-                    </div>
+                        <div className='mb-2'>
+                            <label htmlFor='confim-password' className='form-lable'>Confim Password</label>
+                            <input required value={dangky.Passwordd} onChange={(e) => setDangky({ ...dangky, Passwordd: e.target.value })} id='confim-password' className='form-control' type='text' name='confimPassword' ></input>
+                        </div>
 
-                    <button type='submit' onClick={(e) => { e.preventDefault(); handleSubmitRegister(); }} className='submit-btn'> SignUp </button>
-                    <button type='submit' onClick={handleToggleForm} className='submit-btn-phu'> Login </button>
+                        <button type='submit' onClick={(e) => { e.preventDefault(); handleSubmitRegister(); }} className='submit-btn'> SignUp </button>
+                        <button type='submit' onClick={handleToggleForm} className='submit-btn-phu'> Login </button>
+                    </div>
                 </div>
             </div>
-        </div>
         );
     }
     const [showLoginForm, setShowLoginForm] = useState(true);
 
     const handleToggleForm = () => {
-      setShowLoginForm(!showLoginForm);
+        setShowLoginForm(!showLoginForm);
     };
     return (
         <div className='login-page'>
@@ -145,13 +148,13 @@ const Login = () => {
                         <input required id='Password' className='form-control' type='text' name='passwowrd' value={password} onChange={(e) => setPassword(e.target.value)}></input>
                     </div>
                     <button type='submit' onClick={handleSubmitLogin} className='submit-btn'> Login </button>
-                    {tontai !== "" ? null : <button type='submit' onClick={handleToggleForm}  className='submit-btn-phu'>Register</button>}
-                    
+                    {tontai !== "" ? null : <button type='submit' onClick={handleToggleForm} className='submit-btn-phu'>Register</button>}
+
                 </div>
             </div>
             {tontai !== "" ? null : formdangky()}
         </div>
-        
+
     );
 }
 

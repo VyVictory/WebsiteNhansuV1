@@ -20,9 +20,9 @@ const Cccanhan = () => {
     })
     useEffect(() => {
         axios.get("http://localhost:3000/nhansu/" + idns)
-            .then(Response => {if(Response.data){setNhansu(Response.data);}else{alert(Response.data)}}).catch(err => console.log(err))
+            .then(Response => { if (Response.data) { setNhansu(Response.data); } else { alert(Response.data) } }).catch(err => console.log(err))
         axios.get('http://localhost:3000/chucvu')
-            .then(response => {if(response.data) {setChucvu(response.data);}else{alert('No data found');}}).catch(err => console.log(err));
+            .then(response => { if (response.data) { setChucvu(response.data); } else { alert('No data found'); } }).catch(err => console.log(err));
     }, [])
     const [Calams, setCalam] = useState([])
     const [chamcongid, setChamcongid] = useState([])
@@ -31,12 +31,12 @@ const Cccanhan = () => {
         axios.get('http://localhost:3000/calamviec')
             .then((res) => setCalam(res.data)).catch(err => console.log(err))
         axios.get('http://localhost:3000/chamcong/')
-            .then(response =>{if(response.data){setChamcongid(response.data);}else{alert('No data found');}}).catch(err => console.log(err));
+            .then(response => { if (response.data) { setChamcongid(response.data); } else { alert('No data found'); } }).catch(err => console.log(err));
     }, [])
 
     useEffect(() => {
         const filteredCalams = Calams.filter(cl => {
-            const found = chamcongid.some(cc => cc.Idcalamviec === cl._id && cc.Idns ===idns );
+            const found = chamcongid.some(cc => cc.Idcalamviec === cl._id && cc.Idns === idns);
             return !found;
         });
         setCalams_notset(filteredCalams);
@@ -50,7 +50,7 @@ const Cccanhan = () => {
             luong: Chamcong.luong
         };
         axios.post('http://localhost:3000/chamcong', dataToSend)
-            .then(_res => {navigate('/quanlycongtacnhanvien/quanlyvitri')}).catch(err => console.log(err));
+            .then(_res => { navigate('/quanlycongtacnhanvien/quanlyvitri') }).catch(err => console.log(err));
     }
     const [selectcl, setSelectcl] = useState([])
     const [tranghientai, settranghientai] = useState(1);
@@ -108,7 +108,7 @@ const Cccanhan = () => {
     }
     useEffect(() => {
         axios.get("http://localhost:3000/calamviec/" + Chamcong.Idcalamviec)
-        .then((Response) => setSelectcl(Response.data)).catch(err => console.log(err));
+            .then((Response) => setSelectcl(Response.data)).catch(err => console.log(err));
     }, [Chamcong.Idcalamviec]);
     return (
         <div>Chấm Công Cho : <span>{Nhansu.Hoten}</span><br />
@@ -156,12 +156,13 @@ const Cccanhan = () => {
             </div>
             <button className='select_calam' onClick={hienthibang}>
                 Chọn Ca Làm Việc
-            </button><br/>
-            thời gian làm việc: <input type="number" onChange={(e) => setChamcong({ ...Chamcong, Thoigianlam: e.target.value })} placeholder='thời gian làm việc(giờ)' className='' required /> <br />
-            Lương: <input type="number" onChange={(e) => setChamcong({ ...Chamcong, luong: e.target.value })} placeholder='Nhập Lương (VND)' className='' required />
-            <br/>
-            <button className='' onClick={luu}>Lưu</button>
-
+            </button><br />
+            <form onSubmit={luu}>
+                thời gian làm việc: <input type="number" onChange={(e) => setChamcong({ ...Chamcong, Thoigianlam: e.target.value })} placeholder='thời gian làm việc(giờ)' className='' required /> <br />
+                Lương: <input type="number" onChange={(e) => setChamcong({ ...Chamcong, luong: e.target.value })} placeholder='Nhập Lương (VND)' className='' required />
+                <br />
+                <button className='' >Lưu</button>
+            </form>
         </div>
     );
 }

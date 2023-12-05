@@ -28,7 +28,7 @@ const Chinhsua = () => {
             Thang: Calam.Thang,
             Nam: Calam.Nam
         };    
-        if(dataToSend.Nam>999){
+        if(dataToSend.Nam>9999){
             alert("vui lòng kiểm tra lại năm");
         }
         else{      
