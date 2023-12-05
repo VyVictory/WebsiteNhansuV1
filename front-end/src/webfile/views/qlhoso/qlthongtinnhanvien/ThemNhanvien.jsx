@@ -58,7 +58,7 @@ const ThemNhanvien = () => {
 
                 <div className=''>
                     <label for="inputCCCD" className="" htmlFor="CCCD">CCCD:</label>
-                <input type="number" placeholder='Nhap CCCD' onChange ={(e) => setNhansu({...Nhansu, Cccd: e.target.value})} required/> </div>
+                <input type="string" placeholder='Nhap CCCD' onChange ={(e) => setNhansu({...Nhansu, Cccd: e.target.value})} required/> </div>
 
                 <div className=''>
                     <label for="inputID" className="" htmlFor="Mnv">Ma nhan vien:</label>
@@ -66,7 +66,7 @@ const ThemNhanvien = () => {
 
                 <div className=''>
                     <label for="inputSdt" className="" htmlFor="SDT">SDT:</label>
-                <input type="number" placeholder='Nhap SDT' onChange ={(e) => setNhansu({...Nhansu, Sdt: e.target.value})} required/> </div>
+                <input type="string" placeholder='Nhap SDT' onChange ={(e) => setNhansu({...Nhansu, Sdt: e.target.value})} required/> </div>
     
                 <label for="inputLuong" className="">Luong:</label>
                 <input type="number" placeholder='Nhap Luong' className='' onChange ={(e) => setNhansu({...Nhansu, luong: e.target.value})} required/> 

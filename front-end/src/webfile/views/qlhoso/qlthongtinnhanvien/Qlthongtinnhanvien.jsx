@@ -22,6 +22,7 @@ const Qlthongtinnhanvien= () =>{
         )})
     }
     const [isButtonClicked, setIsButtonClicked] = useState(false);
+    
     function resettimkiem() {
         setIsButtonClicked(false);
     }
