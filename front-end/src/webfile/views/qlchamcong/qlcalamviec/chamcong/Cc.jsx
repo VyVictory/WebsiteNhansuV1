@@ -9,6 +9,7 @@ const Chamcong = () => {
     const [Chucvus, setChucvu] = useState([]);
     const [Chamcongs, setChamcongs] = useState([])
     const [Calams, setCalam] = useState([])
+    const UQuyenhang = sessionStorage.getItem('UQuyenhang');
 
     const [isOverlayVisible, setIsOverlayVisible] = useState(false);
     const [Calams_set, setCalams_set] = useState([])
@@ -138,9 +139,7 @@ const Chamcong = () => {
     };
     return (
         <div>
-            <Link to="/quanlychamcong/quanlycalamviec/xaydungcalamviec/themcalamviec" className='btn btn-success'>
-                Chấm Công
-            </Link>
+            <h1>Danh Sách Chấm Công</h1>
             <div>
 
                 <div className={isOverlayVisible ? "overlay show" : "overlay"}>
@@ -181,7 +180,7 @@ const Chamcong = () => {
                         <th>Mã Nhân Viên</th>
                         <th>Tên</th>
                         <th>Chức Vụ</th>
-                        <th>Cập Nhật Gần Đây</th>
+                        <th>Quyền Hạng</th>
                         <th>Tùy Chọn</th>
 
                     </tr>
@@ -189,38 +188,72 @@ const Chamcong = () => {
                 <tbody>
                     {isButtonClicked ? (
                         locnhansu.map(e => {
-                            const correspondingChucvu = Chucvus.find((cv) => cv._id === e.Chucvu);
-                            return <tr >
-                                <td>{e.Mnv}</td>
-                                <td>{e.Hoten}</td>
-                                <td>{correspondingChucvu ? correspondingChucvu.Tenchucvu : '-'}</td>
-                                <td></td>
-
-                                <td>
-                                    <Link to={'http://localhost:3001/quanlychamcong/quanlycalamviec/chamcongcanhan/&idns=' + e._id} className='btn btn-info btn-sm me-2'>
-                                        Chấm Công</Link>
-                                    <button className='btn btn-warning btn-sm' onClick={() => { setIdnsedit(e._id); hienthibang(); }}>
-                                        Chấm Lại</button>
-                                </td>
-                            </tr>
+                            const correspondingChucvu = Chucvus.find((c) => c._id === e.Chucvu);
+                            if (correspondingChucvu && +correspondingChucvu.Quyenhang > +UQuyenhang) {
+                                return {
+                                    id: e._id,
+                                    Hoten: e.Hoten,
+                                    Cccd: e.Cccd,
+                                    Mnv: e.Mnv,
+                                    Sdt: e.Sdt,
+                                    luong: e.luong,
+                                    Tenchucvu: correspondingChucvu.Tenchucvu,
+                                    Quyenhang: correspondingChucvu.Quyenhang,
+                                };
+                            } else {
+                                return null;
+                            }
                         })
+                            .filter(Boolean) // Lọc bỏ các phần tử null
+                            .sort((a, b) => a.Quyenhang - b.Quyenhang) // Sắp xếp theo Quyenhang tăng dần
+                            .map((e) => (
+                                <tr >
+                                    <td>{e.Mnv}</td>
+                                    <td>{e.Hoten}</td>
+                                    <td>{e.Tenchucvu ? e.Tenchucvu : '-'}</td>
+                                    <td>{e.Quyenhang}</td>
+                                    <td>
+                                        <Link to={'http://localhost:3001/quanlychamcong/quanlycalamviec/chamcongcanhan/&idns=' + e._id} className='btn btn-info btn-sm me-2'>
+                                            Chấm Công</Link>
+                                        <button className='btn btn-warning btn-sm' onClick={() => { setIdnsedit(e._id); hienthibang(); }}>
+                                            Chấm Lại</button>
+                                    </td>
+                                </tr>
+                            ))
                     ) : (
                         Nhansus.map(e => {
-                            const correspondingChucvu = Chucvus.find((cv) => cv._id === e.Chucvu);
-                            return <tr >
-                                <td>{e.Mnv}</td>
-                                <td>{e.Hoten}</td>
-                                <td>{correspondingChucvu ? correspondingChucvu.Tenchucvu : '-'}</td>
-                                <td></td>
-
-                                <td>
-                                    <Link to={'http://localhost:3001/quanlychamcong/quanlycalamviec/chamcongcanhan/&idns=' + e._id} className='btn btn-info btn-sm me-2'>
-                                        Chấm Công</Link>
-                                    <button className='btn btn-warning btn-sm' onClick={() => { setIdnsedit(e._id); hienthibang(); }}>
-                                        Chấm Lại</button>
-                                </td>
-                            </tr>
+                            const correspondingChucvu = Chucvus.find((c) => c._id === e.Chucvu);
+                            if (correspondingChucvu && +correspondingChucvu.Quyenhang > +UQuyenhang) {
+                                return {
+                                    id: e._id,
+                                    Hoten: e.Hoten,
+                                    Cccd: e.Cccd,
+                                    Mnv: e.Mnv,
+                                    Sdt: e.Sdt,
+                                    luong: e.luong,
+                                    Tenchucvu: correspondingChucvu.Tenchucvu,
+                                    Quyenhang: correspondingChucvu.Quyenhang,
+                                };
+                            } else {
+                                return null;
+                            }
                         })
+                            .filter(Boolean) // Lọc bỏ các phần tử null
+                            .sort((a, b) => a.Quyenhang - b.Quyenhang) // Sắp xếp theo Quyenhang tăng dần
+                            .map((e) => (
+                                <tr >
+                                    <td>{e.Mnv}</td>
+                                    <td>{e.Hoten}</td>
+                                    <td>{e.Tenchucvu ? e.Tenchucvu : '-'}</td>
+                                    <td>{e.Quyenhang}</td>
+                                    <td>
+                                        <Link to={'http://localhost:3001/quanlychamcong/quanlycalamviec/chamcongcanhan/&idns=' + e._id} className='btn btn-info btn-sm me-2'>
+                                            Chấm Công</Link>
+                                        <button className='btn btn-warning btn-sm' onClick={() => { setIdnsedit(e._id); hienthibang(); }}>
+                                            Chấm Lại</button>
+                                    </td>
+                                </tr>
+                            ))
                     )}
                 </tbody>
             </table>

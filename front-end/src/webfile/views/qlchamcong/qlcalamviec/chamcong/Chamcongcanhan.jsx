@@ -50,7 +50,7 @@ const Cccanhan = () => {
             luong: Chamcong.luong
         };
         axios.post('http://localhost:3000/chamcong', dataToSend)
-            .then(_res => { navigate('/quanlycongtacnhanvien/quanlyvitri') }).catch(err => console.log(err));
+            .then(_res => { navigate('/quanlychamcong/quanlycalamviec/chamcong') }).catch(err => console.log(err));
     }
     const [selectcl, setSelectcl] = useState([])
     const [tranghientai, settranghientai] = useState(1);

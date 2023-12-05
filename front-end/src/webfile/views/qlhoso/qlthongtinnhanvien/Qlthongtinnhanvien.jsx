@@ -46,7 +46,7 @@ const Qlthongtinnhanvien = () => {
         setLoc(filteredNhansus);
         setIsButtonClicked(true);
     };
-    function resettimkiemtext(){
+    function resettimkiemtext() {
         inputRef.current.value = ''; // Xóa giá trị của input
     };
     const tieudedanhsach = () => {
@@ -58,6 +58,7 @@ const Qlthongtinnhanvien = () => {
                 <th>Sdt</th>
                 <th>luong</th>
                 <th>Chucvu </th>
+                <th>Quyền Hạng</th>
                 <th> Tuy chon </th>
             </tr>
         </thead>
@@ -88,27 +89,41 @@ const Qlthongtinnhanvien = () => {
                     <tbody>
                         {
                             loc.map(e => {
-                                Chucvu.map(c=>{
-                                    if(c._id === e.Chucvu && c.Quyenhang > UQuyenhang){
-                                        const correspondingChucvu = Chucvu.find((cv) => cv._id === e.Chucvu);
-                                
-                                        return <tr>
-                                            <td>{e.Hoten}</td>
-                                            <td>{e.Cccd}</td>
-                                            <td>{e.Mnv}</td>
-                                            <td>{e.Sdt}</td>
-                                            <td>{e.luong}</td>
-                                            <td>{correspondingChucvu ? correspondingChucvu.Tenchucvu : '-'}</td>
-                                            <td>
-                                                <Link to={'/quanlythongtinnhanvien/Chinhsua/&idns=' + e._id} className='btn btn-info btn-sm me-2'> Chinh sua </Link>
-                                                <button className='btn btn-warning btn-sm' onClick={() => handleDelete(e._id)}> Xoa</button>
-                                            </td>
-                                        </tr>
-                                    }
-                                })
-                                
+                                const correspondingChucvu = Chucvu.find((c) => c._id === e.Chucvu);
+                                if (correspondingChucvu && +correspondingChucvu.Quyenhang > +UQuyenhang) {
+                                    return {
+                                        id: e._id,
+                                        Hoten: e.Hoten,
+                                        Cccd: e.Cccd,
+                                        Mnv: e.Mnv,
+                                        Sdt: e.Sdt,
+                                        luong: e.luong,
+                                        Tenchucvu: correspondingChucvu.Tenchucvu,
+                                        Quyenhang: correspondingChucvu.Quyenhang,
+                                    };
+                                } else {
+                                    return null;
+                                }
                             })
+                                .filter(Boolean) // Lọc bỏ các phần tử null
+                                .sort((a, b) => a.Quyenhang - b.Quyenhang) // Sắp xếp theo Quyenhang tăng dần
+                                .map((e) => (
+                                    <tr key={e.id}>
+                                        <td>{e.Hoten}</td>
+                                        <td>{e.Cccd}</td>
+                                        <td>{e.Mnv}</td>
+                                        <td>{e.Sdt}</td>
+                                        <td>{e.luong}</td>
+                                        <td>{e.Tenchucvu ? e.Tenchucvu : '-'}</td>
+                                        <td>{e.Quyenhang ? e.Quyenhang : '-'}</td>
+                                        <td>
+                                            <Link to={'/quanlythongtinnhanvien/Chinhsua/&idns=' + e.id} className='btn btn-info btn-sm me-2'> Chinh sua </Link>
+                                            <button className='btn btn-warning btn-sm' onClick={() => handleDelete(e.id)}> Xoa</button>
+                                        </td>
+                                    </tr>
+                                ))
                         }
+
                     </tbody>
                 </table>
             ) : (
@@ -117,20 +132,39 @@ const Qlthongtinnhanvien = () => {
                     <tbody>
                         {
                             Nhansus.map(e => {
-                                const correspondingChucvu = Chucvu.find((cv) => cv._id === e.Chucvu);
-                                return <tr>
-                                    <td>{e.Hoten}</td>
-                                    <td>{e.Cccd}</td>
-                                    <td>{e.Mnv}</td>
-                                    <td>{e.Sdt}</td>
-                                    <td>{e.luong}</td>
-                                    <td>{correspondingChucvu ? correspondingChucvu.Tenchucvu : '-'}</td>
-                                    <td>
-                                        <Link to={'/quanlythongtinnhanvien/Chinhsua/&idns=' + e._id} className='btn btn-info btn-sm me-2'> Chinh sua </Link>
-                                        <button className='btn btn-warning btn-sm' onClick={() => handleDelete(e._id)}> Xoa</button>
-                                    </td>
-                                </tr>
+                                const correspondingChucvu = Chucvu.find((c) => c._id === e.Chucvu);
+                                if (correspondingChucvu && +correspondingChucvu.Quyenhang > +UQuyenhang) {
+                                    return {
+                                        id: e._id,
+                                        Hoten: e.Hoten,
+                                        Cccd: e.Cccd,
+                                        Mnv: e.Mnv,
+                                        Sdt: e.Sdt,
+                                        luong: e.luong,
+                                        Tenchucvu: correspondingChucvu.Tenchucvu,
+                                        Quyenhang: correspondingChucvu.Quyenhang,
+                                    };
+                                } else {
+                                    return null;
+                                }
                             })
+                                .filter(Boolean) // Lọc bỏ các phần tử null
+                                .sort((a, b) => a.Quyenhang - b.Quyenhang) // Sắp xếp theo Quyenhang tăng dần
+                                .map((e) => (
+                                    <tr key={e.id}>
+                                        <td>{e.Hoten}</td>
+                                        <td>{e.Cccd}</td>
+                                        <td>{e.Mnv}</td>
+                                        <td>{e.Sdt}</td>
+                                        <td>{e.luong}</td>
+                                        <td>{e.Tenchucvu ? e.Tenchucvu : '-'}</td>
+                                        <td>{e.Quyenhang ? e.Quyenhang : '-'}</td>
+                                        <td>
+                                            <Link to={'/quanlythongtinnhanvien/Chinhsua/&idns=' + e.id} className='btn btn-info btn-sm me-2'> Chinh sua </Link>
+                                            <button className='btn btn-warning btn-sm' onClick={() => handleDelete(e.id)}> Xoa</button>
+                                        </td>
+                                    </tr>
+                                ))
                         }
                     </tbody>
                 </table>

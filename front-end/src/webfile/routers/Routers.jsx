@@ -1,6 +1,6 @@
-import {BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "../views/home/Home";
-import {useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 //import Login from "../views/Login/Login";
 //<Route path="/home" element={<Home/>} /> 
 import Qlthongtinnhanvien from "../views/qlhoso/qlthongtinnhanvien/Qlthongtinnhanvien";
@@ -25,7 +25,7 @@ import ThemCalamviec from "../views/qlchamcong/qlcalamviec/xdcalamviec/ThemCalam
 import Login from "../login/login";
 import Captaikhoan from "../views/qlhoso/quanlycongtacnhanvien/Captaikhoan";
 
-function Routers(){
+function Routers() {
     const [onevent, setOnevent] = useState(false);
     useEffect(() => {
         const loggedIn = sessionStorage.getItem('loggedIn');
@@ -34,40 +34,46 @@ function Routers(){
         }
     }, []);
     const UQuyentruyvan = sessionStorage.getItem('UQuyentruyvan');
-    return onevent ? (  
-                <Router> 
-                    <Bar/>
-                    <div className="page-container">
-                        <Routes>
-                            
-                            <Route path="/" element={<Home/>} />
-                            <Route path="/quanlythongtinnhanvien" element={<Qlthongtinnhanvien/>}/> 
-                            <Route path="/ThemNhanvien" element={<ThemNhanvien/>}/> 
-                            <Route path="/quanlythongtinnhanvien/Chinhsua/:id" element={<Chinhsua/>}/>                                      
-                            <Route path="/quanlycongtacnhanvien/quanlyvitri" element={<Qlvitri/>} />
-                            <Route path="/quanlycongtacnhanvien/ThemChucvu" element={<ThemChucvu/>} />
-                            <Route path="/quanlythongtinnhanvien/Chinhsuachucvu/:id" element={<Chinhsuachucvu/>}/>  
 
-                            <Route path="/lapbangchamcong" element={<Lbchamcong/>}/>    
-                            <Route path="/quanlychamcong/quanlycalamviec/chamcong" element={<Chamcong/>}/>
-                            <Route path="/quanlychamcong/quanlycalamviec/chamcongcanhan/:id" element={<Chamcongcanhan/>}/>
-                            <Route path="/quanlychamcong/quanlycalamviec/Chinhsuacc/:id" element={<Chinhsuacc/>}/>
+    const routes = [
+        <Route path="/" element={<Home />} />,
+        <Route path="/quanlythongtinnhanvien" element={<Qlthongtinnhanvien />} />,
+        <Route path="/ThemNhanvien" element={<ThemNhanvien />} />,
+        <Route path="/quanlythongtinnhanvien/Chinhsua/:id" element={<Chinhsua />} />,
+        <Route path="/quanlycongtacnhanvien/quanlyvitri" element={<Qlvitri />} />,
+        <Route path="/quanlycongtacnhanvien/ThemChucvu" element={<ThemChucvu />} />,
+        <Route path="/quanlythongtinnhanvien/Chinhsuachucvu/:id" element={<Chinhsuachucvu />} />,
 
-                            <Route path="/quanlychamcong/quanlycalamviec/xaydungcalamviec" element={<Xdcalamviec/>}/>
-                            <Route path="/quanlychamcong/quanlycalamviec/xaydungcalamviec/themcalamviec" element={<ThemCalamviec/>}/>
-                            <Route path="/quanlychamcong/quanlycalamviec/xaydungcalamviec/chinhsuacalamviec/:id" element={<Chinhsuacalamviec/>}/>
+        <Route path="/lapbangchamcong" element={<Lbchamcong />} />,
+        <Route path="/quanlychamcong/quanlycalamviec/chamcong" element={<Chamcong />} />,
+        <Route path="/quanlychamcong/quanlycalamviec/chamcongcanhan/:id" element={<Chamcongcanhan />} />,
+        <Route path="/quanlychamcong/quanlycalamviec/Chinhsuacc/:id" element={<Chinhsuacc />} />,
 
-                            <Route path="/tinhluong" element={<Tl/>}/>
-                            <Route path="/xuatbangluongtheomau" element={<Xbluongtheomau/>}/>
+        <Route path="/quanlychamcong/quanlycalamviec/xaydungcalamviec" element={<Xdcalamviec />} />,
+        <Route path="/quanlychamcong/quanlycalamviec/xaydungcalamviec/themcalamviec" element={<ThemCalamviec />} />,
+        <Route path="/quanlychamcong/quanlycalamviec/xaydungcalamviec/chinhsuacalamviec/:id" element={<Chinhsuacalamviec />} />,
 
-                            <Route path="/captaikhoan" element={<Captaikhoan/>}/>
-                        </Routes>
-                    </div>
-                </Router>
-                ) : (
-                <div>
-                    <Login />
-                </div>
-            )};
+        <Route path="/tinhluong" element={<Tl />} />,
+        <Route path="/xuatbangluongtheomau" element={<Xbluongtheomau />} />,
+        <Route key="qlthongtinnhanvien" path="/quanlythongtinnhanvien" element={<Qlthongtinnhanvien />} />,
+    ];
+    if (UQuyentruyvan === 'admin') {
+        routes.push(<Route key="captaikhoan" path="/captaikhoan" element={<Captaikhoan />} />);
+    }
+    return onevent ? (
+        <Router>
+            <Bar />
+            <div className="page-container">
+                <Routes>
+                    {routes}
+                </Routes>
+            </div>
+        </Router>
+    ) : (
+        <div>
+            <Login />
+        </div>
+    )
+};
 
 export default Routers;

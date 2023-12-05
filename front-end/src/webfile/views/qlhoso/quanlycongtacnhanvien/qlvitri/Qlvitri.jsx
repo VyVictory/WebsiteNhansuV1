@@ -4,7 +4,7 @@ import {Link, useNavigate } from 'react-router-dom'
 const Qlvitri = () => {
     const navigate = useNavigate()
     const [Chucvu, setChucvu] = useState([])
- 
+    const UQuyenhang = sessionStorage.getItem('UQuyenhang');
     useEffect(() =>{
         axios.get('http://localhost:3000/chucvu')
         .then(Response => {
@@ -50,6 +50,7 @@ const Qlvitri = () => {
                         {
                             Chucvu.slice() // Tạo một bản sao của mảng Chucvu để tránh thay đổi mảng gốc
                                 .sort((a, b) => a.Quyenhang - b.Quyenhang) // Sắp xếp mảng theo Quyenhang từ nhỏ đến lớn
+                                .filter(cv => cv.Quyenhang > UQuyenhang)// lọc quyền lớn hơn ra 
                                 .map(cv => (
                                     <tr key={cv._id}>
                                         <td>{cv.Tenchucvu}</td> 
