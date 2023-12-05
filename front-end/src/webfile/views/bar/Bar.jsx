@@ -80,7 +80,8 @@ const Bar = () => {
                     </li>
             </div>
             <div className="rightbar">
-
+                xin chao:
+                <button>Logout</button>
             </div>
         </div>
      );

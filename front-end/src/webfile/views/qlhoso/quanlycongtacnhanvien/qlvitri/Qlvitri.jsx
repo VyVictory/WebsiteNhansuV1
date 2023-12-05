@@ -42,16 +42,29 @@ const Qlvitri = () => {
                     <thead>
                         <tr>
                             <th>Tên Chức Vụ</th>
+                            <th>Ghi Chú</th>
+                            <th>Quyền Hạng</th>
                         </tr>
                     </thead>
                     <tbody>
                         {
-                            Chucvu.map(cv => {
-                                return <tr>
-                                    <td>{cv.Tenchucvu}</td>   
-                                    <td className=""><Link to={'/quanlythongtinnhanvien/Chinhsuachucvu/&idcv='+ cv._id} className='btn btn-info btn-sm me-2'>Chinh sua </Link><button className='btn btn-warning btn-sm' onClick={() => handleDelete(cv._id)}>Xoa</button></td>                             
-                                </tr>
-                            })
+                            Chucvu.slice() // Tạo một bản sao của mảng Chucvu để tránh thay đổi mảng gốc
+                                .sort((a, b) => a.Quyenhang - b.Quyenhang) // Sắp xếp mảng theo Quyenhang từ nhỏ đến lớn
+                                .map(cv => (
+                                    <tr key={cv._id}>
+                                        <td>{cv.Tenchucvu}</td> 
+                                        <td>{cv.Ghichu}</td>
+                                        <td>{cv.Quyenhang}</td>  
+                                        <td className="">
+                                            <Link to={'/quanlythongtinnhanvien/Chinhsuachucvu/&idcv='+ cv._id} className='btn btn-info btn-sm me-2'>
+                                                Chinh sua
+                                            </Link>
+                                            <button className='btn btn-warning btn-sm' onClick={() => handleDelete(cv._id)}>
+                                                Xoa
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))
                         }
                     </tbody>
                 </table>

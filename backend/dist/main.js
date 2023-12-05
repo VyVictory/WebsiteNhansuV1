@@ -615,6 +615,10 @@ __decorate([
 __decorate([
     (0, mongoose_1.Prop)(),
     __metadata("design:type", String)
+], Chucvu.prototype, "Quyenhang", void 0);
+__decorate([
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", String)
 ], Chucvu.prototype, "Ghichu", void 0);
 exports.Chucvu = Chucvu = __decorate([
     (0, mongoose_1.Schema)()
@@ -1335,7 +1339,7 @@ module.exports = require("@nestjs/swagger");
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("670066722c2e3249fe8b")
+/******/ 		__webpack_require__.h = () => ("7c6228bf73d5bfc39088")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */

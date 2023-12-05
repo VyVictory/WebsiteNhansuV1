@@ -127,7 +127,7 @@ const Cccanhan = () => {
             <div>
                 <div className={isselectVisible ? "select_calamviec show" : "select_calamviec"}>
                     <div className="centeredTable">
-                        <span>Danh Sách Ca Làm</span><button onClick={tacbang}>Tắt bảng</button><br />
+                        <span>Danh Sách Ca Làm Chưa Chấm</span><button onClick={tacbang}>Tắt bảng</button><br />
                         <input type="date" id='inputngaytim' value={sldatetime} onChange={handleDateChange} required></input> <button onClick={timkiem}>Tìm</button>
                         <button onClick={offtimkiem}>reset</button><br />
                         {isButtonClicked ? (

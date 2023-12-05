@@ -19,7 +19,7 @@
     display: flex;
     padding: 0 40px;
     margin-bottom: 2px;
-
+    position: absolute;
     
 }
 .sl{
@@ -99,4 +99,7 @@
 
 .quanlycongtacnhanvien , .quanlycalamviec{
     background-color: blueviolet;
+}
+.rightbar{
+    float: right;
 }

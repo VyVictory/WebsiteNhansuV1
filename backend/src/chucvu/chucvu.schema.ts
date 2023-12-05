@@ -8,8 +8,10 @@ export class Chucvu extends Document {
   Tenchucvu: string;
 
   @Prop()
-  Ghichu: string;
+  Quyenhang:string;
 
+  @Prop()
+  Ghichu: string;
 }
 
 export const ChucvuSchema = SchemaFactory.createForClass(Chucvu);

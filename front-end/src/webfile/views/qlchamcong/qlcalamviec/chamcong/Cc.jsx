@@ -143,7 +143,7 @@ const Chamcong = () => {
 
                 <div className={isOverlayVisible ? "overlay show" : "overlay"}>
                     <div className="centeredTable">
-                        <span>Dòng chữ trong bảng</span><button onClick={tacbang}>Tắt bảng</button><br />
+                        <span>Danh Sách Ca Làm Đã Chấm</span><button onClick={tacbang}>Tắt bảng</button><br />
                         <input type="date" id='inputngaytim' value={sldatetime} onChange={handleDateChange} required></input> <button onClick={timkiem}>Tìm</button>
                         <button onClick={resettimkiem}>reset</button><br />
                         {isButtonClicked ? (
