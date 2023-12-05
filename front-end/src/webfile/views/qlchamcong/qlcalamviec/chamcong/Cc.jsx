@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import '../../../../viewcss/qlchamcong/qlcalamviec/Cc.css';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 
@@ -13,6 +13,8 @@ const Chamcong = () => {
     const [isOverlayVisible, setIsOverlayVisible] = useState(false);
     const [Calams_set, setCalams_set] = useState([])
     const [idnsedit, setIdnsedit] = useState('')
+
+    const inputRef = useRef(null);
 
     const navigate = useNavigate()
     useEffect(() => {
@@ -105,35 +107,35 @@ const Chamcong = () => {
     //********** */
     function motcalamviec(id, ten, start, end, ngay, thang, nam) {
         return <button className='table_calam_select' onClick={() => { next_edit_chamcong(id); tacbang(); }}>
-                <tr>tên ca:{ten}</tr><div></div>
-                <tr>daytime:{ngay}/{thang}/{nam}</tr><div></div>
-                <tr>Thời gian làm:{start + "H-" + end}H</tr><div></div>
+            <tr>tên ca:{ten}</tr><div></div>
+            <tr>daytime:{ngay}/{thang}/{nam}</tr><div></div>
+            <tr>Thời gian làm:{start + "H-" + end}H</tr><div></div>
         </button>
     }
-   // const [isButtonClicked, setIsButtonClicked] = useState(false);
-   function resettimkiem() {
-       setIsButtonClicked(false);
-   }
-   const [locnhansu, setLocnhansu] = useState([]);
-   const[tutim, setTutim]=useState({
-       tutim:''
-   })
-   const [selectedOption, setSelectedOption] = useState({
-       selecto: ''
-   });
-     
-   const handleTim = () => {
-       const a = tutim.tutim ? tutim.tutim + '' : 'Hoten';
-       const filteredNhansus = Nhansus.filter(ns => {
-           const b = ns[selectedOption.selecto] + '';
-           if (typeof a === 'string' && typeof b === 'string') {
-               return b.includes(a);
-           }   
-           return false;
-       });
-       setLocnhansu(filteredNhansus);
-       setIsButtonClicked(true);
-   };
+    // const [isButtonClicked, setIsButtonClicked] = useState(false);
+    const [locnhansu, setLocnhansu] = useState([]);
+    const [tutim, setTutim] = useState({
+        tutim: ''
+    })
+    const [selectedOption, setSelectedOption] = useState({
+        selecto: ''
+    });
+
+    const handleTim = () => {
+        const a = tutim.tutim ? tutim.tutim + '' : 'Hoten';
+        const filteredNhansus = Nhansus.filter(ns => {
+            const b = ns[selectedOption.selecto] + '';
+            if (typeof a === 'string' && typeof b === 'string') {
+                return b.includes(a);
+            }
+            return false;
+        });
+        setLocnhansu(filteredNhansus);
+        setIsButtonClicked(true);
+    };
+    function resettimkiemtext() {
+        inputRef.current.value = ''; // Xóa giá trị của input
+    };
     return (
         <div>
             <Link to="/quanlychamcong/quanlycalamviec/xaydungcalamviec/themcalamviec" className='btn btn-success'>
@@ -163,15 +165,15 @@ const Chamcong = () => {
                 </div>
             </div>
             <div>
-                <select onChange={(e) => setSelectedOption({...selectedOption, selecto: e.target.value})}>
+                <select onChange={(e) => setSelectedOption({ ...selectedOption, selecto: e.target.value })}>
                     <option value=''>Chọn một trường</option>
                     <option value="Hoten">Họ Tên</option>
                     <option value="Mnv">Mnv</option>
                 </select>
 
-                <input type='text' onChange={(e)=> setTutim({...tutim, tutim: e.target.value})} placeholder='từ khóa tìm'></input>
+                <input type='text' ref={inputRef} onChange={(e) => { setTutim({ ...tutim, tutim: e.target.value }); handleTim() }} placeholder='từ khóa tìm'></input>
                 <button onClick={handleTim}>Tìm</button>
-                <button onClick={resettimkiem}>reset</button>
+                <button onClick={() => { resettimkiem(); resettimkiemtext(); }}>reset</button>
             </div>
             <table className='table'>
                 <thead>
@@ -185,41 +187,41 @@ const Chamcong = () => {
                     </tr>
                 </thead>
                 <tbody>
-                {isButtonClicked ? (
-                    locnhansu.map(e => {
-                        const correspondingChucvu = Chucvus.find((cv) => cv._id === e.Chucvu);
-                        return <tr >
-                            <td>{e.Mnv}</td>
-                            <td>{e.Hoten}</td>
-                            <td>{correspondingChucvu ? correspondingChucvu.Tenchucvu : '-'}</td>
-                            <td></td>
+                    {isButtonClicked ? (
+                        locnhansu.map(e => {
+                            const correspondingChucvu = Chucvus.find((cv) => cv._id === e.Chucvu);
+                            return <tr >
+                                <td>{e.Mnv}</td>
+                                <td>{e.Hoten}</td>
+                                <td>{correspondingChucvu ? correspondingChucvu.Tenchucvu : '-'}</td>
+                                <td></td>
 
-                            <td>
-                                <Link to={'http://localhost:3001/quanlychamcong/quanlycalamviec/chamcongcanhan/&idns=' + e._id} className='btn btn-info btn-sm me-2'>
-                                    Chấm Công</Link>
-                                <button className='btn btn-warning btn-sm' onClick={() => { setIdnsedit(e._id); hienthibang(); }}>
-                                    Chấm Lại</button>
-                            </td>
-                        </tr>
-                    })
-                ):(
-                    Nhansus.map(e => {
-                        const correspondingChucvu = Chucvus.find((cv) => cv._id === e.Chucvu);
-                        return <tr >
-                            <td>{e.Mnv}</td>
-                            <td>{e.Hoten}</td>
-                            <td>{correspondingChucvu ? correspondingChucvu.Tenchucvu : '-'}</td>
-                            <td></td>
+                                <td>
+                                    <Link to={'http://localhost:3001/quanlychamcong/quanlycalamviec/chamcongcanhan/&idns=' + e._id} className='btn btn-info btn-sm me-2'>
+                                        Chấm Công</Link>
+                                    <button className='btn btn-warning btn-sm' onClick={() => { setIdnsedit(e._id); hienthibang(); }}>
+                                        Chấm Lại</button>
+                                </td>
+                            </tr>
+                        })
+                    ) : (
+                        Nhansus.map(e => {
+                            const correspondingChucvu = Chucvus.find((cv) => cv._id === e.Chucvu);
+                            return <tr >
+                                <td>{e.Mnv}</td>
+                                <td>{e.Hoten}</td>
+                                <td>{correspondingChucvu ? correspondingChucvu.Tenchucvu : '-'}</td>
+                                <td></td>
 
-                            <td>
-                                <Link to={'http://localhost:3001/quanlychamcong/quanlycalamviec/chamcongcanhan/&idns=' + e._id} className='btn btn-info btn-sm me-2'>
-                                    Chấm Công</Link>
-                                <button className='btn btn-warning btn-sm' onClick={() => { setIdnsedit(e._id); hienthibang(); }}>
-                                    Chấm Lại</button>
-                            </td>
-                        </tr>
-                    })
-                )}
+                                <td>
+                                    <Link to={'http://localhost:3001/quanlychamcong/quanlycalamviec/chamcongcanhan/&idns=' + e._id} className='btn btn-info btn-sm me-2'>
+                                        Chấm Công</Link>
+                                    <button className='btn btn-warning btn-sm' onClick={() => { setIdnsedit(e._id); hienthibang(); }}>
+                                        Chấm Lại</button>
+                                </td>
+                            </tr>
+                        })
+                    )}
                 </tbody>
             </table>
         </div>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import axios from 'axios';
 import '../../../viewcss/qlhoso/qlthongtinnhanvien/Qlthongtinnhanvien.css'
 import { Link, NavLink, useNavigate } from 'react-router-dom';
@@ -6,7 +6,7 @@ const Qlthongtinnhanvien = () => {
     const navigate = useNavigate()
     const [Nhansus, setNhansu] = useState([])
     const [Chucvu, setChucvu] = useState([])
-
+    const inputRef = useRef(null);
 
     useEffect(() => {
         axios.get('http://localhost:3000/nhansu')
@@ -48,6 +48,9 @@ const Qlthongtinnhanvien = () => {
         setLoc(filteredNhansus);
         setIsButtonClicked(true);
     };
+    function resettimkiemtext(){
+        inputRef.current.value = ''; // Xóa giá trị của input
+    };
     const tieudedanhsach = () => {
         return <thead>
             <tr>
@@ -68,7 +71,7 @@ const Qlthongtinnhanvien = () => {
             </Link><div></div>
             <div>
                 <select onChange={(e) => setSelectedOption({ ...selectedOption, selecto: e.target.value })}>
-                    <option value=''>Chọn một trường</option>
+                    <option value='Hoten'>Chọn một trường</option>
                     <option value="Hoten">Họ Tên</option>
                     <option value="Cccd">Cccd</option>
                     <option value="Mnv">Mnv</option>
@@ -76,9 +79,9 @@ const Qlthongtinnhanvien = () => {
                     <option value="luong">Luong</option>
                 </select>
 
-                <input type='text' onChange={(e) => setTutim({ ...tutim, tutim: e.target.value })} placeholder='từ khóa tìm'></input>
+                <input type='text' ref={inputRef} onChange={(e) => { setTutim({ ...tutim, tutim: e.target.value }); handleTim() }} placeholder='từ khóa tìm'></input>
                 <button onClick={handleTim}>Tìm</button>
-                <button onClick={resettimkiem}>reset</button>
+                <button onClick={() => { resettimkiem(); resettimkiemtext(); }}>reset</button>
             </div>
 
             {isButtonClicked ? (
