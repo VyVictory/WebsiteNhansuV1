@@ -123,10 +123,12 @@ const Captaikhoan = () => {
                         <label htmlFor="v3">Xóa</label><br></br>
                         <input type="checkbox" name="chamcong" onChange={handleCheckboxChange}></input>
                         <label htmlFor="v4">Chấm Công</label><br></br>
-                        <input type="checkbox" name="qlvt" onChange={handleCheckboxChange}></input>
-                        <label htmlFor="v5">Quản Lý Vị Trí</label><br></br>
-                        <input type="checkbox" name="qlc" onChange={handleCheckboxChange}></input>
+                        <input type="checkbox" name="qlcongtac" onChange={handleCheckboxChange}></input>
+                        <label htmlFor="v5">Quản Lý Công Tác Nhân Viên</label><br></br>
+                        <input type="checkbox" name="qlcalam" onChange={handleCheckboxChange}></input>
                         <label htmlFor="v6">Quản Lý Ca</label><br></br>
+                        <input type="checkbox" name="qldanhsach" onChange={handleCheckboxChange}></input>
+                        <label htmlFor="v7">Quản Lý Danh Sách Nhân Sự</label><br></br>
                     </div>
                     <input type='submit' className='btn btn-success w-100 rounded-0 mb-2' value="Tạo Tài Khoản" />
                 </form>

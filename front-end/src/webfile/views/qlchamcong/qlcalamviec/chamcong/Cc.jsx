@@ -191,7 +191,7 @@ const Chamcong = () => {
                             const correspondingChucvu = Chucvus.find((c) => c._id === e.Chucvu);
                             if (correspondingChucvu && +correspondingChucvu.Quyenhang > +UQuyenhang) {
                                 return {
-                                    id: e._id,
+                                    _id: e._id,
                                     Hoten: e.Hoten,
                                     Cccd: e.Cccd,
                                     Mnv: e.Mnv,
@@ -225,7 +225,7 @@ const Chamcong = () => {
                             const correspondingChucvu = Chucvus.find((c) => c._id === e.Chucvu);
                             if (correspondingChucvu && +correspondingChucvu.Quyenhang > +UQuyenhang) {
                                 return {
-                                    id: e._id,
+                                    _id: e._id,
                                     Hoten: e.Hoten,
                                     Cccd: e.Cccd,
                                     Mnv: e.Mnv,

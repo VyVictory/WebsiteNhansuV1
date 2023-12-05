@@ -33,32 +33,56 @@ function Routers() {
             setOnevent(true);
         }
     }, []);
-    const UQuyentruyvan = sessionStorage.getItem('UQuyentruyvan');
+    const UQuyentruyvan = '' + sessionStorage.getItem('UQuyentruyvan');
 
     const routes = [
         <Route path="/" element={<Home />} />,
-        <Route path="/quanlythongtinnhanvien" element={<Qlthongtinnhanvien />} />,
-        <Route path="/ThemNhanvien" element={<ThemNhanvien />} />,
-        <Route path="/quanlythongtinnhanvien/Chinhsua/:id" element={<Chinhsua />} />,
-        <Route path="/quanlycongtacnhanvien/quanlyvitri" element={<Qlvitri />} />,
-        <Route path="/quanlycongtacnhanvien/ThemChucvu" element={<ThemChucvu />} />,
-        <Route path="/quanlythongtinnhanvien/Chinhsuachucvu/:id" element={<Chinhsuachucvu />} />,
+
 
         <Route path="/lapbangchamcong" element={<Lbchamcong />} />,
-        <Route path="/quanlychamcong/quanlycalamviec/chamcong" element={<Chamcong />} />,
-        <Route path="/quanlychamcong/quanlycalamviec/chamcongcanhan/:id" element={<Chamcongcanhan />} />,
-        <Route path="/quanlychamcong/quanlycalamviec/Chinhsuacc/:id" element={<Chinhsuacc />} />,
-
-        <Route path="/quanlychamcong/quanlycalamviec/xaydungcalamviec" element={<Xdcalamviec />} />,
-        <Route path="/quanlychamcong/quanlycalamviec/xaydungcalamviec/themcalamviec" element={<ThemCalamviec />} />,
-        <Route path="/quanlychamcong/quanlycalamviec/xaydungcalamviec/chinhsuacalamviec/:id" element={<Chinhsuacalamviec />} />,
 
         <Route path="/tinhluong" element={<Tl />} />,
         <Route path="/xuatbangluongtheomau" element={<Xbluongtheomau />} />,
-        <Route key="qlthongtinnhanvien" path="/quanlythongtinnhanvien" element={<Qlthongtinnhanvien />} />,
     ];
     if (UQuyentruyvan === 'admin') {
-        routes.push(<Route key="captaikhoan" path="/captaikhoan" element={<Captaikhoan />} />);
+        routes.push(<Route path="/captaikhoan" element={<Captaikhoan />} />);
+    }
+    // routes.push();
+    if (UQuyentruyvan.includes("qlcongtac") || UQuyentruyvan === 'admin') {
+        if (UQuyentruyvan.includes("them") || UQuyentruyvan === 'admin') {
+            routes.push(<Route path="/quanlycongtacnhanvien/ThemChucvu" element={<ThemChucvu />} />,);
+        }
+        if (UQuyentruyvan.includes("sua") || UQuyentruyvan === 'admin') {
+            routes.push(<Route path="/quanlythongtinnhanvien/Chinhsuachucvu/:id" element={<Chinhsuachucvu />} />,);
+        }
+        routes.push(<Route path="/quanlycongtacnhanvien/quanlyvitri" element={<Qlvitri />} />);
+    }
+    if (UQuyentruyvan.includes("qldanhsach") || UQuyentruyvan === 'admin') {
+        if (UQuyentruyvan.includes("them") || UQuyentruyvan === 'admin') {
+            routes.push(<Route path="/ThemNhanvien" element={<ThemNhanvien />} />,);
+        }
+        if (UQuyentruyvan.includes("sua") || UQuyentruyvan === 'admin') {
+            routes.push(<Route path="/quanlythongtinnhanvien/Chinhsua/:id" element={<Chinhsua />} />,);
+        }
+        routes.push(<Route path="/quanlythongtinnhanvien" element={<Qlthongtinnhanvien />} />);
+    }
+    if (UQuyentruyvan.includes("qlcalam") || UQuyentruyvan === 'admin') {
+        if (UQuyentruyvan.includes("them") || UQuyentruyvan === 'admin') {
+            routes.push(<Route path="/quanlychamcong/quanlycalamviec/xaydungcalamviec/themcalamviec" element={<ThemCalamviec />} />,);
+        }
+        if (UQuyentruyvan.includes("sua") || UQuyentruyvan === 'admin') {
+            routes.push(<Route path="/quanlychamcong/quanlycalamviec/xaydungcalamviec/chinhsuacalamviec/:id" element={<Chinhsuacalamviec />} />,);
+        }
+        routes.push(<Route path="/quanlychamcong/quanlycalamviec/xaydungcalamviec" element={<Xdcalamviec />} />,);
+    }
+    if (UQuyentruyvan.includes("chamcong") || UQuyentruyvan === 'admin') {
+        if (UQuyentruyvan.includes("them") || UQuyentruyvan === 'admin') {
+            routes.push(<Route path="/quanlychamcong/quanlycalamviec/chamcong" element={<Chamcong />} />,);
+        }
+        if (UQuyentruyvan.includes("sua") || UQuyentruyvan === 'admin') {
+            routes.push(<Route path="/quanlychamcong/quanlycalamviec/Chinhsuacc/:id" element={<Chinhsuacc />} />,);
+        }
+        routes.push(<Route path="/quanlychamcong/quanlycalamviec/chamcongcanhan/:id" element={<Chamcongcanhan />} />,);
     }
     return onevent ? (
         <Router>
