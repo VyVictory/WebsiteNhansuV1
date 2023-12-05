@@ -5,9 +5,9 @@ import { Link, NavLink, useNavigate } from 'react-router-dom';
 const Qlthongtinnhanvien = () => {
     const navigate = useNavigate()
     const [Nhansus, setNhansu] = useState([])
+    const UQuyenhang = sessionStorage.getItem('UQuyenhang');
     const [Chucvu, setChucvu] = useState([])
     const inputRef = useRef(null);
-
     useEffect(() => {
         axios.get('http://localhost:3000/nhansu')
             .then((res) => setNhansu(res.data)).catch(err => console.log(err))
@@ -24,7 +24,6 @@ const Qlthongtinnhanvien = () => {
             })
     }
     const [isButtonClicked, setIsButtonClicked] = useState(false);
-
     function resettimkiem() {
         setIsButtonClicked(false);
     }
@@ -35,7 +34,6 @@ const Qlthongtinnhanvien = () => {
     const [selectedOption, setSelectedOption] = useState({
         selecto: ''
     });
-
     const handleTim = () => {
         const a = tutim.tutim ? tutim.tutim + '' : 'Hoten';
         const filteredNhansus = Nhansus.filter(ns => {
@@ -90,19 +88,25 @@ const Qlthongtinnhanvien = () => {
                     <tbody>
                         {
                             loc.map(e => {
-                                const correspondingChucvu = Chucvu.find((cv) => cv._id === e.Chucvu);
-                                return <tr>
-                                    <td>{e.Hoten}</td>
-                                    <td>{e.Cccd}</td>
-                                    <td>{e.Mnv}</td>
-                                    <td>{e.Sdt}</td>
-                                    <td>{e.luong}</td>
-                                    <td>{correspondingChucvu ? correspondingChucvu.Tenchucvu : '-'}</td>
-                                    <td>
-                                        <Link to={'/quanlythongtinnhanvien/Chinhsua/&idns=' + e._id} className='btn btn-info btn-sm me-2'> Chinh sua </Link>
-                                        <button className='btn btn-warning btn-sm' onClick={() => handleDelete(e._id)}> Xoa</button>
-                                    </td>
-                                </tr>
+                                Chucvu.map(c=>{
+                                    if(c._id === e.Chucvu && c.Quyenhang > UQuyenhang){
+                                        const correspondingChucvu = Chucvu.find((cv) => cv._id === e.Chucvu);
+                                
+                                        return <tr>
+                                            <td>{e.Hoten}</td>
+                                            <td>{e.Cccd}</td>
+                                            <td>{e.Mnv}</td>
+                                            <td>{e.Sdt}</td>
+                                            <td>{e.luong}</td>
+                                            <td>{correspondingChucvu ? correspondingChucvu.Tenchucvu : '-'}</td>
+                                            <td>
+                                                <Link to={'/quanlythongtinnhanvien/Chinhsua/&idns=' + e._id} className='btn btn-info btn-sm me-2'> Chinh sua </Link>
+                                                <button className='btn btn-warning btn-sm' onClick={() => handleDelete(e._id)}> Xoa</button>
+                                            </td>
+                                        </tr>
+                                    }
+                                })
+                                
                             })
                         }
                     </tbody>

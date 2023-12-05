@@ -5,7 +5,7 @@ import '../viewcss/login/login.css'
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [tontai, setTontai] = useState("");
+    const [tontai, setTontai] = useState(true);
     const [taikhoan, setTaikhoan] = useState([]);
     useEffect(() => {
         axios.get('http://localhost:3000/account')
@@ -21,11 +21,11 @@ const Login = () => {
     })
     useEffect(() => {
         taikhoan.map((e) => {
-            if (e.Quyenhang === 'admin') {
-                setTontai("a");
+            if (e.Quyentruyvan === 'admin') {
+                setTontai(false);
             }
         });
-    }, [taikhoan, tontai]);
+    },);
     //bam pass
 
     // Hàm băm mật khẩu
@@ -44,33 +44,42 @@ const Login = () => {
             return false;
         }
     };
-
-    const handleSubmitLogin = (event) => {
+    //sosanh pass vs user************
+    const handleSubmitLogin = async (event) => {
         event.preventDefault();
-
+        let accId = '';
+    
+        // Tìm ID của tài khoản
         taikhoan.forEach((e) => {
             if (username === e.User) {
-                comparePasswords(password, e.Password)
-                    .then((isMatch) => {
-                        if (isMatch) {
-                            sessionStorage.setItem('loggedIn', 'true');
-                            sessionStorage.setItem('Uid', e._id);
-                            sessionStorage.setItem('UUser', e.User);
-                            sessionStorage.setItem('UQuyenhang', e.Quyenhang);
-                            sessionStorage.setItem('UQuyentruyvan', e.Quyentruyvan);
-                            window.location.reload();
-                        } else {
-                            alert("mật khẩu không chính xác");
-                        }
-                    })
-                    .catch((err) => {
-                        console.error('Lỗi:', err);
-                    });
-            } else {
-                alert("Tên người dùng hoặc mật khẩu không chính xác");
+                accId = e._id;
             }
         });
+    
+        try {
+            // Gọi API để lấy thông tin người dùng dựa trên ID
+            const response = await axios.get('http://localhost:3000/account/' + accId);
+            const user = response.data;
+    
+            // So sánh mật khẩu
+            const isMatch = await comparePasswords(password, user.Password);
+    
+            if (isMatch) {
+                sessionStorage.setItem('loggedIn', 'true');
+                sessionStorage.setItem('Uid', user._id);
+                sessionStorage.setItem('UUser', user.User);
+                sessionStorage.setItem('UQuyenhang', user.Quyenhang);
+                sessionStorage.setItem('UQuyentruyvan', user.Quyentruyvan);
+                window.location.reload();
+            } else {
+                alert("Tài khoản hoặc mật khẩu sai");
+            }
+        } catch (error) {
+            console.error('Lỗi:', error);
+        }
     };
+    
+    //********** */
     const handleSubmitRegister = async () => {
         try {
             const hashedPassword = await hashPassword(dangky.Password);
@@ -148,11 +157,11 @@ const Login = () => {
                         <input required id='Password' className='form-control' type='text' name='passwowrd' value={password} onChange={(e) => setPassword(e.target.value)}></input>
                     </div>
                     <button type='submit' onClick={handleSubmitLogin} className='submit-btn'> Login </button>
-                    {tontai !== "" ? null : <button type='submit' onClick={handleToggleForm} className='submit-btn-phu'>Register</button>}
+                    {tontai ===false ? null : <button type='submit' onClick={handleToggleForm} className='submit-btn-phu'>Register</button>}
 
                 </div>
             </div>
-            {tontai !== "" ? null : formdangky()}
+            {tontai === false ? null : formdangky()}
         </div>
 
     );

@@ -45,6 +45,7 @@ const Captaikhoan = () => {
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
+
         try {
             const hashedPassword = await hashPassword(account.Password);
             const dataToSend = {
@@ -74,14 +75,16 @@ const Captaikhoan = () => {
                     if (e.User === dataToSend.User) {
                         trunguser = 'co';
                     }
+                    else { trunguser = 'khong' }
                 })
                 if (trunguser === 'co') {
                     alert('User ' + dataToSend.User + ' đã được đăng ký');
                 }
-                else {
+                else if (trunguser === 'khong') {
                     axios.post('http://localhost:3000/account', dataToSend)
                         .then(_res => {
-                            alert('cấp thành công tài khoản có user:'+dataToSend.User);
+                            alert('cấp thành công tài khoản có user:' + dataToSend.User);
+                            window.location.reload();
                         }).catch(err => console.log(err));
                 }
             }

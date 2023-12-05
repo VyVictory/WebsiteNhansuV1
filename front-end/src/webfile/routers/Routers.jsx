@@ -33,7 +33,7 @@ function Routers(){
             setOnevent(true);
         }
     }, []);
-    
+    const UQuyentruyvan = sessionStorage.getItem('UQuyentruyvan');
     return onevent ? (  
                 <Router> 
                     <Bar/>
