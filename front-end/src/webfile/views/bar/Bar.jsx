@@ -1,5 +1,10 @@
 import '../../viewcss/Bar/Bar.css';
 const Bar = () => {
+    const handleSubmitLogout = (event) => {
+        event.preventDefault();
+        sessionStorage.setItem('loggedIn', 'false');
+        window.location.reload();
+    }
     return ( 
         <div className="Bar">
 
@@ -81,7 +86,7 @@ const Bar = () => {
             </div>
             <div className="rightbar">
                 xin chao:
-                <button>Logout</button>
+                <button onClick={handleSubmitLogout}>Logout</button>
             </div>
         </div>
      );

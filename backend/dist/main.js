@@ -195,7 +195,7 @@ module.exports = function (updatedModules, renewedModules) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core_1 = __webpack_require__(4);
 const app_module_1 = __webpack_require__(5);
-const swagger_1 = __webpack_require__(29);
+const swagger_1 = __webpack_require__(37);
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule, { cors: true });
     const config = new swagger_1.DocumentBuilder()
@@ -245,6 +245,8 @@ const chucvu_module_1 = __webpack_require__(17);
 const calamviec_module_1 = __webpack_require__(20);
 const chamcong_module_1 = __webpack_require__(24);
 const config_1 = __webpack_require__(28);
+const role_module_1 = __webpack_require__(29);
+const account_module_1 = __webpack_require__(33);
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -255,7 +257,7 @@ exports.AppModule = AppModule = __decorate([
                 isGlobal: true,
             }),
             mongoose_1.MongooseModule.forRoot('mongodb://127.0.0.1:27017/doan1'),
-            nhansu_module_1.NhansuModule, chucvu_module_1.ChucvuModule, calamviec_module_1.CalamviecModule, chamcong_module_1.ChamcongModule],
+            nhansu_module_1.NhansuModule, chucvu_module_1.ChucvuModule, calamviec_module_1.CalamviecModule, chamcong_module_1.ChamcongModule, role_module_1.RoleModule, account_module_1.AccountModule],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
     })
@@ -1272,6 +1274,442 @@ module.exports = require("@nestjs/config");
 
 /***/ }),
 /* 29 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.RoleModule = void 0;
+const common_1 = __webpack_require__(6);
+const mongoose_1 = __webpack_require__(9);
+const role_controller_1 = __webpack_require__(30);
+const role_service_1 = __webpack_require__(31);
+const role_schema_1 = __webpack_require__(32);
+let RoleModule = class RoleModule {
+};
+exports.RoleModule = RoleModule;
+exports.RoleModule = RoleModule = __decorate([
+    (0, common_1.Module)({
+        imports: [
+            mongoose_1.MongooseModule.forFeature([{ name: role_schema_1.Role.name, schema: role_schema_1.RoleSchema }]),
+        ],
+        controllers: [role_controller_1.RoleController],
+        providers: [role_service_1.RoleService],
+    })
+], RoleModule);
+
+
+/***/ }),
+/* 30 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+var _a, _b, _c;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.RoleController = void 0;
+const common_1 = __webpack_require__(6);
+const role_service_1 = __webpack_require__(31);
+let RoleController = class RoleController {
+    constructor(roleService) {
+        this.roleService = roleService;
+    }
+    async getAllRole() {
+        return this.roleService.getAllRole();
+    }
+    async getRoleById(id) {
+        return this.roleService.getRoleById(id);
+    }
+    async createRole(data) {
+        return this.roleService.createRole(data);
+    }
+    async updateRole(id, data) {
+        return this.roleService.updateRole(id, data);
+    }
+    async deleteRole(id) {
+        return this.roleService.deleteRole(id);
+    }
+};
+exports.RoleController = RoleController;
+__decorate([
+    (0, common_1.Get)(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], RoleController.prototype, "getAllRole", null);
+__decorate([
+    (0, common_1.Get)(':id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], RoleController.prototype, "getRoleById", null);
+__decorate([
+    (0, common_1.Post)(),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [typeof (_b = typeof Partial !== "undefined" && Partial) === "function" ? _b : Object]),
+    __metadata("design:returntype", Promise)
+], RoleController.prototype, "createRole", null);
+__decorate([
+    (0, common_1.Put)(':id'),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, typeof (_c = typeof Partial !== "undefined" && Partial) === "function" ? _c : Object]),
+    __metadata("design:returntype", Promise)
+], RoleController.prototype, "updateRole", null);
+__decorate([
+    (0, common_1.Delete)(':id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], RoleController.prototype, "deleteRole", null);
+exports.RoleController = RoleController = __decorate([
+    (0, common_1.Controller)('role'),
+    __metadata("design:paramtypes", [typeof (_a = typeof role_service_1.RoleService !== "undefined" && role_service_1.RoleService) === "function" ? _a : Object])
+], RoleController);
+
+
+/***/ }),
+/* 31 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+var _a;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.RoleService = void 0;
+const common_1 = __webpack_require__(6);
+const mongoose_1 = __webpack_require__(9);
+const mongoose_2 = __webpack_require__(12);
+const role_schema_1 = __webpack_require__(32);
+let RoleService = class RoleService {
+    constructor(roleModel) {
+        this.roleModel = roleModel;
+    }
+    async getAllRole() {
+        return this.roleModel.find().exec();
+    }
+    async getRoleById(id) {
+        const Role = await this.roleModel.findById(id);
+        if (!Role) {
+            throw new common_1.NotFoundException('Role không tồn tại');
+        }
+        else
+            return Role;
+    }
+    async createRole(data) {
+        const newRole = new this.roleModel(data);
+        return newRole.save();
+    }
+    async updateRole(id, data) {
+        return this.roleModel.findByIdAndUpdate(id, data, { new: true }).exec();
+    }
+    async deleteRole(id) {
+        return this.roleModel.findByIdAndDelete(id).exec();
+    }
+};
+exports.RoleService = RoleService;
+exports.RoleService = RoleService = __decorate([
+    (0, common_1.Injectable)(),
+    __param(0, (0, mongoose_1.InjectModel)(role_schema_1.Role.name)),
+    __metadata("design:paramtypes", [typeof (_a = typeof mongoose_2.Model !== "undefined" && mongoose_2.Model) === "function" ? _a : Object])
+], RoleService);
+
+
+/***/ }),
+/* 32 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.RoleSchema = exports.Role = void 0;
+const mongoose_1 = __webpack_require__(9);
+const mongoose_2 = __webpack_require__(12);
+let Role = class Role extends mongoose_2.Document {
+};
+exports.Role = Role;
+__decorate([
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", String)
+], Role.prototype, "Quyenhang", void 0);
+__decorate([
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", String)
+], Role.prototype, "Quyentruyvan", void 0);
+exports.Role = Role = __decorate([
+    (0, mongoose_1.Schema)()
+], Role);
+exports.RoleSchema = mongoose_1.SchemaFactory.createForClass(Role);
+
+
+/***/ }),
+/* 33 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.AccountModule = void 0;
+const common_1 = __webpack_require__(6);
+const mongoose_1 = __webpack_require__(9);
+const account_controller_1 = __webpack_require__(34);
+const account_service_1 = __webpack_require__(35);
+const account_schema_1 = __webpack_require__(36);
+let AccountModule = class AccountModule {
+};
+exports.AccountModule = AccountModule;
+exports.AccountModule = AccountModule = __decorate([
+    (0, common_1.Module)({
+        imports: [
+            mongoose_1.MongooseModule.forFeature([{ name: account_schema_1.Account.name, schema: account_schema_1.AccountSchema }]),
+        ],
+        controllers: [account_controller_1.AccountController],
+        providers: [account_service_1.AccountService],
+    })
+], AccountModule);
+
+
+/***/ }),
+/* 34 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+var _a, _b, _c;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.AccountController = void 0;
+const common_1 = __webpack_require__(6);
+const account_service_1 = __webpack_require__(35);
+let AccountController = class AccountController {
+    constructor(accountService) {
+        this.accountService = accountService;
+    }
+    async getAllAccount() {
+        return this.accountService.getAllAccount();
+    }
+    async getAccountById(id) {
+        return this.accountService.getAccountById(id);
+    }
+    async createAccount(data) {
+        return this.accountService.createAccount(data);
+    }
+    async updateAccount(id, data) {
+        return this.accountService.updateAccount(id, data);
+    }
+    async deleteAccount(id) {
+        return this.accountService.deleteAccount(id);
+    }
+};
+exports.AccountController = AccountController;
+__decorate([
+    (0, common_1.Get)(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], AccountController.prototype, "getAllAccount", null);
+__decorate([
+    (0, common_1.Get)(':id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], AccountController.prototype, "getAccountById", null);
+__decorate([
+    (0, common_1.Post)(),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [typeof (_b = typeof Partial !== "undefined" && Partial) === "function" ? _b : Object]),
+    __metadata("design:returntype", Promise)
+], AccountController.prototype, "createAccount", null);
+__decorate([
+    (0, common_1.Put)(':id'),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, typeof (_c = typeof Partial !== "undefined" && Partial) === "function" ? _c : Object]),
+    __metadata("design:returntype", Promise)
+], AccountController.prototype, "updateAccount", null);
+__decorate([
+    (0, common_1.Delete)(':id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], AccountController.prototype, "deleteAccount", null);
+exports.AccountController = AccountController = __decorate([
+    (0, common_1.Controller)('account'),
+    __metadata("design:paramtypes", [typeof (_a = typeof account_service_1.AccountService !== "undefined" && account_service_1.AccountService) === "function" ? _a : Object])
+], AccountController);
+
+
+/***/ }),
+/* 35 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+var _a;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.AccountService = void 0;
+const common_1 = __webpack_require__(6);
+const mongoose_1 = __webpack_require__(9);
+const mongoose_2 = __webpack_require__(12);
+const account_schema_1 = __webpack_require__(36);
+let AccountService = class AccountService {
+    constructor(accountModel) {
+        this.accountModel = accountModel;
+    }
+    async getAllAccount() {
+        return this.accountModel.find().exec();
+    }
+    async getAccountById(id) {
+        const Account = await this.accountModel.findById(id);
+        if (!Account) {
+            throw new common_1.NotFoundException('Account không tồn tại');
+        }
+        else
+            return Account;
+    }
+    async createAccount(data) {
+        const newAccount = new this.accountModel(data);
+        return newAccount.save();
+    }
+    async updateAccount(id, data) {
+        return this.accountModel.findByIdAndUpdate(id, data, { new: true }).exec();
+    }
+    async deleteAccount(id) {
+        return this.accountModel.findByIdAndDelete(id).exec();
+    }
+};
+exports.AccountService = AccountService;
+exports.AccountService = AccountService = __decorate([
+    (0, common_1.Injectable)(),
+    __param(0, (0, mongoose_1.InjectModel)(account_schema_1.Account.name)),
+    __metadata("design:paramtypes", [typeof (_a = typeof mongoose_2.Model !== "undefined" && mongoose_2.Model) === "function" ? _a : Object])
+], AccountService);
+
+
+/***/ }),
+/* 36 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var _a;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.AccountSchema = exports.Account = void 0;
+const role_schema_1 = __webpack_require__(32);
+const mongoose_1 = __webpack_require__(9);
+const mongoose_2 = __webpack_require__(12);
+let Account = class Account extends mongoose_2.Document {
+};
+exports.Account = Account;
+__decorate([
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", String)
+], Account.prototype, "User", void 0);
+__decorate([
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", String)
+], Account.prototype, "Email", void 0);
+__decorate([
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", String)
+], Account.prototype, "Password", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ type: 'ObjectId', ref: 'Idns' }),
+    __metadata("design:type", typeof (_a = typeof role_schema_1.Role !== "undefined" && role_schema_1.Role) === "function" ? _a : Object)
+], Account.prototype, "Idrole", void 0);
+exports.Account = Account = __decorate([
+    (0, mongoose_1.Schema)()
+], Account);
+exports.AccountSchema = mongoose_1.SchemaFactory.createForClass(Account);
+
+
+/***/ }),
+/* 37 */
 /***/ ((module) => {
 
 "use strict";
@@ -1339,7 +1777,7 @@ module.exports = require("@nestjs/swagger");
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("7c6228bf73d5bfc39088")
+/******/ 		__webpack_require__.h = () => ("7e48db33bc6aeaa85a06")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
