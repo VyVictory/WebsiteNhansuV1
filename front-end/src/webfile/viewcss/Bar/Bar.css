@@ -1,5 +1,5 @@
 .Bar{
-    position: fixed;
+    position: relative;
     top: 0;
     background-color: cornflowerblue;
     display: block;

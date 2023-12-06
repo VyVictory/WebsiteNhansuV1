@@ -1,16 +1,21 @@
 import axios from 'axios';
 import { useRef, useEffect, useState } from 'react';
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import bcrypt from 'bcryptjs';
 import '../../../viewcss/qlhoso/qlthongtinnhanvien/Captaikhoan.css'
 const Captaikhoan = () => {
     const [listacc, setListacc] = useState([])
+    const navigate = useNavigate()
+    const [dsacc, setDsacc] = useState([])
+    //const UQuyenhang = sessionStorage.getItem('UQuyenhang');
+
+
     useEffect(() => {
         axios.get('http://localhost:3000/account')
             .then(Response => {
                 if (Response.data) {
-                    setListacc(Response.data);
+                    setDsacc(Response.data);
                 } else {
                     alert(Response.data)
                 }
@@ -44,6 +49,13 @@ const Captaikhoan = () => {
         }
 
     };
+
+    const [isVisible, setIsVisible] = useState(false);
+
+    const toggleVisibility = () => {
+        setIsVisible(!isVisible);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -96,71 +108,116 @@ const Captaikhoan = () => {
 
     return (
         <div className='ctk-all'>
-            <div className='ctk-container'>
-                <div className='ctk-child'>
-                    <div className='ctk-tille'>
-                        <h2>Cấp Tài Khoản</h2>
-                    </div>
-
-                    <form className='ctk-form' id="myForm" onSubmit={handleSubmit}>
-                        <div className='ctk-input-conten'>
-                            <div className='ctk-input-text'>
-                                <label className='ctk-tille-input'>UserName:</label><br />
-                                <input required type="text" onChange={(e) => setAccount({ ...account, User: e.target.value })} placeholder='Nhập tên tài khoản' /><br />
-                                <label className='ctk-tille-input'>Password:</label><br />
-                                <input required type="password" onChange={(e) => setAccount({ ...account, Password: e.target.value })} placeholder='Nhập mật khẩu' /><br />
-                                <label className='ctk-tille-input'>Confirm Password:</label><br />
-                                <input required type="password" onChange={(e) => setAccount({ ...account, ConfirmPassword: e.target.value })} placeholder='Xác nhận mật khẩu' /><br />
-                                <label className='ctk-tille-input'>Email:</label><br />
-                                <input required type="email" onChange={(e) => setAccount({ ...account, Email: e.target.value })} placeholder='Nhập email' /><br />
-                                <label className='ctk-tille-input'>Quyền Hạng Chức Vụ:</label><br />
-                                <input required type='number' onChange={(e) => setAccount({ ...account, Quyenhang: e.target.value })} placeholder='Nhập Quyền Hạng' />
-                                <span class="ctk-tooltip-container">
-                                    <span class="ctk-hover-element" title="Quyền Hạng này phân cấp cho chức vụ nhằm xác định chức vụ lớn hơn cao nhất là 1"> ?</span>
-                                </span>
-                                <br />
-                            </div>
-                            <div className='ctk_quyentruyvan'>
-                                <label>Quyền Truy Vấn:</label>
-
-                                <label class="ctk-container-checkbox" htmlFor="v1">Thêm
-                                    <input type="checkbox" name="them" onChange={handleCheckboxChange}></input>
-                                    <span class="ctk-checkmark"></span>
-                                </label><br />
-                                <label class="ctk-container-checkbox" htmlFor="v2">Sửa
-                                    <input type="checkbox" name="sua" onChange={handleCheckboxChange}></input>
-                                    <span class="ctk-checkmark"></span>
-                                </label><br></br>
-                                <label class="ctk-container-checkbox" htmlFor="v3">Xóa
-                                    <input type="checkbox" name="xoa" onChange={handleCheckboxChange} ></input>
-                                    <span class="ctk-checkmark"></span>
-                                </label><br></br>
-                                <label class="ctk-container-checkbox" htmlFor="v4">Chấm Công
-                                    <input type="checkbox" name="chamcong" onChange={handleCheckboxChange}></input>
-                                    <span class="ctk-checkmark"></span>
-                                </label><br></br>
-                                <label class="ctk-container-checkbox" htmlFor="v5">Quản Lý Công Tác Nhân Viên
-                                    <input type="checkbox" name="qlcongtac" onChange={handleCheckboxChange}></input>
-                                    <span class="ctk-checkmark"></span>
-                                </label><br></br>
-                                <label class="ctk-container-checkbox" htmlFor="v6">Quản Lý Ca
-                                    <input type="checkbox" name="qlcalam" onChange={handleCheckboxChange}></input>
-                                    <span class="ctk-checkmark"></span>
-                                </label><br></br>
-                                <label class="ctk-container-checkbox" htmlFor="v7">Quản Lý Danh Sách Nhân Sự
-                                    <input type="checkbox" name="qldanhsach" onChange={handleCheckboxChange}></input>
-                                    <span class="ctk-checkmark"></span>
-                                </label><br></br>
-                            </div>
-
-                        </div>
-                        <div className='ctk-bt-tao'>
-                            <input type='submit' className='btn btn-success w-100 rounded-0 mb-2' value="Tạo Tài Khoản" />
-                        </div>
-
-                    </form>
+            <div className='ctk-list-account'>
+                <div >
+                    <button onClick={toggleVisibility}>Cấp Tài Khoản</button>
+                </div>
+                <div className="">
+                    <h3>Danh Sách Tài Khoản</h3>
+                </div>
+                <div className="">
+                    <table className="table">
+                        <thead>
+                            <tr>
+                                <th>UserName</th>
+                                <th>Email</th>
+                                <th>Quyền Hạng</th>
+                                <th>Quyền Truy Vấn</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                dsacc.slice()
+                                    .sort((a, b) => a.Quyenhang - b.Quyenhang)
+                                    .map(ac => (
+                                        <tr key={ac._id}>
+                                            {/* Các cột thông tin của tài khoản */}
+                                            <td>{ac.User}</td>
+                                            <td>{ac.Email}</td>
+                                            <td>{ac.Quyenhang}</td>
+                                            <td>{ac.Quyentruyvan}</td>
+                                            <td className="">
+                                                <Link to={'/' + ac._id} className='btn btn-info btn-sm me-2'>
+                                                    Chinh sua
+                                                </Link>
+                                                <button className='btn btn-warning btn-sm'>
+                                                    Xoa
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))
+                            }
+                        </tbody>
+                    </table>
                 </div>
             </div>
+
+            <div className='ctk-box'>
+                {isVisible && (
+
+                    <div className='ctk-container'>
+                        <div className='ctk-div-bt-tac'>
+                            <button onClick={toggleVisibility} className='ctk-bt-tac'>X</button>
+                        </div>
+                        <div className='ctk-child'>
+                            <div className='ctk-tille'>
+                                <h2>Cấp Tài Khoản</h2>
+                            </div>
+
+                            <form className='ctk-form' id="myForm" onSubmit={handleSubmit}>
+                                <div className='ctk-input-conten'>
+                                    <div className='ctk-input-text'>
+                                        <label className='ctk-tille-input'>UserName:</label><br />
+                                        <input className='ctk-input' required type="text" onChange={(e) => setAccount({ ...account, User: e.target.value })} placeholder='Nhập tên tài khoản' /><br />
+                                        <label className='ctk-tille-input'>Password:</label><br />
+                                        <input className='ctk-input' required type="password" onChange={(e) => setAccount({ ...account, Password: e.target.value })} placeholder='Nhập mật khẩu' /><br />
+                                        <label className='ctk-tille-input'>Confirm Password:</label><br />
+                                        <input className='ctk-input' required type="password" onChange={(e) => setAccount({ ...account, ConfirmPassword: e.target.value })} placeholder='Xác nhận mật khẩu' /><br />
+                                        <label className='ctk-tille-input'>Email:</label><br />
+                                        <input className='ctk-input' required type="email" onChange={(e) => setAccount({ ...account, Email: e.target.value })} placeholder='Nhập email' /><br />
+                                        <label className='ctk-tille-input'>Quyền Hạng Chức Vụ:</label>
+                                        <span class="ctk-tooltip-container">
+                                            <span class="ctk-hover-element" title="Quyền Hạng này phân cấp cho chức vụ nhằm xác định chức vụ lớn hơn cao nhất là 1"> ?</span>
+                                        </span><br />
+                                        <input className='ctk-input' required type='number' onChange={(e) => setAccount({ ...account, Quyenhang: e.target.value })} placeholder='Nhập Quyền Hạng' />
+
+                                        <br />
+                                    </div>
+                                    <div className='ctk_quyentruyvan'>
+                                        <label>Quyền Truy Vấn:</label><br />
+
+                                        <input className='ctk-checkbox' type="checkbox" name="them" onChange={handleCheckboxChange}></input>
+                                        <label htmlFor="v1">Thêm</label><br />
+
+                                        <input className='ctk-checkbox' type="checkbox" name="sua" onChange={handleCheckboxChange}></input>
+                                        <label htmlFor="v2">Sửa</label><br></br>
+
+                                        <input className='ctk-checkbox' type="checkbox" name="xoa" onChange={handleCheckboxChange} ></input>
+                                        <label htmlFor="v3">Xóa</label><br></br>
+
+                                        <input className='ctk-checkbox' type="checkbox" name="chamcong" onChange={handleCheckboxChange}></input>
+                                        <label htmlFor="v4">Chấm Công</label><br></br>
+
+                                        <input className='ctk-checkbox' type="checkbox" name="qlcongtac" onChange={handleCheckboxChange}></input>
+                                        <label htmlFor="v5">Quản Lý Công Tác Nhân Viên</label><br></br>
+
+                                        <input className='ctk-checkbox' type="checkbox" name="qlcalam" onChange={handleCheckboxChange}></input>
+                                        <label htmlFor="v6">Quản Lý Ca</label><br></br>
+
+                                        <input className='ctk-checkbox' type="checkbox" name="qldanhsach" onChange={handleCheckboxChange}></input>
+                                        <label htmlFor="v7">Quản Lý Danh Sách Nhân Sự</label><br></br>
+                                    </div>
+
+                                </div>
+                                <div className='ctk-bt-tao'>
+                                    <input type='submit' className='ctk-nut' value="Tạo Tài Khoản" />
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+
+                )}</div>
         </div>
     )
 
