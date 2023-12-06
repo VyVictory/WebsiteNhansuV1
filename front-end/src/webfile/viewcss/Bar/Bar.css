@@ -1,5 +1,5 @@
 .Bar{
-    position: sticky;
+    position: fixed;
     top: 0;
     background-color: cornflowerblue;
     display: block;
