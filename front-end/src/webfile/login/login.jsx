@@ -110,7 +110,7 @@ const Login = () => {
             <div className='signup-page'>
                 <div className='signup-form-container' style={{ display: showLoginForm ? 'none' : 'block' }}>
                     <h1 className='title'> SignUp Account</h1>
-                    <div>
+                    <form onSubmit={handleSubmitRegister}>
                         <div className='mb-2'>
                             <label htmlFor='user' className='form-lable'>User</label>
                             <input required value={dangky.User} onChange={(e) => setDangky({ ...dangky, User: e.target.value })} id='user' className='form-control' type='text' name='user' ></input>
@@ -118,22 +118,23 @@ const Login = () => {
 
                         <div className='mb-2'>
                             <label htmlFor='email' className='form-lable'>email</label>
-                            <input required value={dangky.Email} onChange={(e) => setDangky({ ...dangky, Email: e.target.value })} id='email' className='form-control' type='email' name='email' ></input>
+                            <input type='email' required value={dangky.Email} onChange={(e) => setDangky({ ...dangky, Email: e.target.value })} id='email' className='form-control' name='email' ></input>
                         </div>
 
                         <div className='mb-2'>
                             <label htmlFor='password' className='form-lable'>Password</label>
-                            <input required value={dangky.Password} onChange={(e) => setDangky({ ...dangky, Password: e.target.value })} id='Password' className='form-control' type='text' name='passwowrd' ></input>
+                            <input type="password" required value={dangky.Password} onChange={(e) => setDangky({ ...dangky, Password: e.target.value })} id='Password' className='form-control' name='passwowrd' ></input>
                         </div>
 
                         <div className='mb-2'>
                             <label htmlFor='confim-password' className='form-lable'>Confim Password</label>
-                            <input required value={dangky.Passwordd} onChange={(e) => setDangky({ ...dangky, Passwordd: e.target.value })} id='confim-password' className='form-control' type='text' name='confimPassword' ></input>
+                            <input type="password" required value={dangky.Passwordd} onChange={(e) => setDangky({ ...dangky, Passwordd: e.target.value })} id='confim-password' className='form-control'  name='confimPassword' ></input>
                         </div>
 
-                        <button type='submit' onClick={(e) => { e.preventDefault(); handleSubmitRegister(); }} className='submit-btn'> SignUp </button>
+                        <button type='submit' className='submit-btn'> SignUp </button>
+                        </form>
                         <button type='submit' onClick={handleToggleForm} className='submit-btn-phu'> Login </button>
-                    </div>
+                    
                 </div>
             </div>
         );
@@ -148,15 +149,17 @@ const Login = () => {
             <div className='login-form-container' style={{ display: showLoginForm ? 'block' : 'none' }}>
                 <h1 className='title'> Login Account</h1>
                 <div className='all_center_login'>
+                    <form  onSubmit={handleSubmitLogin} >
                     <div className='mb-2'>
-                        <label htmlFor='email' className='form-lable'>Username:</label>
-                        <input required id='email' className='form-control' type='text' name='email' value={username} onChange={(e) => setUsername(e.target.value)} ></input>
+                        <label htmlFor='user' className='form-lable'>Username:</label>
+                        <input required id='user' className='form-control'  name='user' value={username} onChange={(e) => setUsername(e.target.value)} ></input>
                     </div>
                     <div className='mb-2'>
                         <label htmlFor='password' className='form-lable'>Password</label>
-                        <input required id='Password' className='form-control' type='text' name='passwowrd' value={password} onChange={(e) => setPassword(e.target.value)}></input>
+                        <input type="password" required id='Password' className='form-control' name='passwowrd' value={password} onChange={(e) => setPassword(e.target.value)}></input>
                     </div>
-                    <button type='submit' onClick={handleSubmitLogin} className='submit-btn'> Login </button>
+                    <button type='submit'  className='submit-btn'> Login </button>
+                    </form>
                     {tontai ===false ? null : <button type='submit' onClick={handleToggleForm} className='submit-btn-phu'>Register</button>}
 
                 </div>
