@@ -25,6 +25,7 @@
 .sl{
     padding-right: 40px;
     
+    
 }
 .select{
     background-color: cornflowerblue;
@@ -70,7 +71,9 @@
     border-top: solid 1px blue;
     margin-top: -6px;
 }
-
+.collapse{
+    position: relative;
+}
 .linksl{
     color: white;
 }

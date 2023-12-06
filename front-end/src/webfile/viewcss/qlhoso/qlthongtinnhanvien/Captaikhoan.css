@@ -1,11 +1,10 @@
 .ctk-all {
     padding:10px;
-    position: relative;
 }
 
 .ctk-container {
     display: block;
-    position: absolute;
+
     font-size: 25px;
     margin-left: 350px;
     width: 1000px;
@@ -22,14 +21,9 @@
     height: 100%;
     /* Center horizontally*/
     margin: 0 auto;
+    margin-top: -60px;
 }
-.ctk-box {
-    position: absolute;
-    top: 100%; /* Đặt top để nó hiển thị dưới nút Cấp Tài Khoản */
-    left: 0;
-    z-index: 4; /* Đặt lớp z-index cao hơn để nó hiển thị phía trên nút */
-    /* Các kiểu dáng khác cho .ctk-box */
-  }
+
 
 .ctk-hover-element:hover::after {
     content: attr(title);
@@ -133,13 +127,7 @@ input[type="checkbox"].ctk-checkbox {
     background-color: green;
     border-radius: 10px;
 }
-.ctk-div-bt-tac{
-    position: absolute;
-}
+
 .ctk-bt-tac:hover{
     background-color: red;
-}
-.ctk-list-account{
-    position: absolute;
-
 }
