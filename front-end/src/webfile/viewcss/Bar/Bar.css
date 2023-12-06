@@ -8,6 +8,7 @@
     border-top: none;
     border-bottom: solid 1px black;
     width: 100%;
+    box-shadow: 2px 2px grey;
 }
 .collapse.in {
     margin-top: -8px;
@@ -127,6 +128,7 @@
     font-size: 20px;
     padding-left: 10px;
     border-radius: 30px;
+
 }
 .bt-logout:hover{
     background-color: red;
