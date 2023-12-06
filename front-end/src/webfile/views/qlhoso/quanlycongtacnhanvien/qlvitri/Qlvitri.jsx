@@ -56,11 +56,11 @@ const Qlvitri = () => {
                                         <td>{cv.Tenchucvu}</td> 
                                         <td>{cv.Ghichu}</td>
                                         <td>{cv.Quyenhang}</td>  
-                                        <td className="">
+                                        <td className='td-tuychon'>
                                             <Link to={'/quanlythongtinnhanvien/Chinhsuachucvu/&idcv='+ cv._id} className='btn btn-info btn-sm me-2'>
                                                 Chinh sua
                                             </Link>
-                                            <button className='btn btn-warning btn-sm' onClick={() => handleDelete(cv._id)}>
+                                            <button className='all-bt-delete' onClick={() => handleDelete(cv._id)}>
                                                 Xoa
                                             </button>
                                         </td>

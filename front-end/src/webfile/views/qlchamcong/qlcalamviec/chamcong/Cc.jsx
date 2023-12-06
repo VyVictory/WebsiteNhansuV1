@@ -212,7 +212,7 @@ const Chamcong = () => {
                                     <td>{e.Hoten}</td>
                                     <td>{e.Tenchucvu ? e.Tenchucvu : '-'}</td>
                                     <td>{e.Quyenhang}</td>
-                                    <td>
+                                    <td className='td-tuychon'>
                                         <Link to={'http://localhost:3001/quanlychamcong/quanlycalamviec/chamcongcanhan/&idns=' + e._id} className='btn btn-info btn-sm me-2'>
                                             Chấm Công</Link>
                                         <button className='btn btn-warning btn-sm' onClick={() => { setIdnsedit(e._id); hienthibang(); }}>
@@ -246,10 +246,10 @@ const Chamcong = () => {
                                     <td>{e.Hoten}</td>
                                     <td>{e.Tenchucvu ? e.Tenchucvu : '-'}</td>
                                     <td>{e.Quyenhang}</td>
-                                    <td>
+                                    <td className='td-tuychon'>
                                         <Link to={'http://localhost:3001/quanlychamcong/quanlycalamviec/chamcongcanhan/&idns=' + e._id} className='btn btn-info btn-sm me-2'>
                                             Chấm Công</Link>
-                                        <button className='btn btn-warning btn-sm' onClick={() => { setIdnsedit(e._id); hienthibang(); }}>
+                                        <button className='bt-chamlai' onClick={() => { setIdnsedit(e._id); hienthibang(); }}>
                                             Chấm Lại</button>
                                     </td>
                                 </tr>

@@ -1,7 +1,6 @@
 .ctk-all {
     padding:10px;
 }
-
 .ctk-container {
     display: block;
 
@@ -50,7 +49,7 @@
 .ctk-input-conten {
     display: flex;
     width: 82%;
-    margin-left: 7%;
+    margin-left: 8%;
     margin-top: 20px;
     border-radius: 10px;
     border: 0.1px solid rgb(169, 169, 169);
@@ -129,5 +128,74 @@ input[type="checkbox"].ctk-checkbox {
 }
 
 .ctk-bt-tac:hover{
+    background-color: red;
+}
+.ctk-tieude{
+    text-align: center;
+}
+.ctk-h3{
+    font-size: 30px;
+}
+.ctk-bt-captk{
+    float: right;
+}
+.ctk-button{
+    height: 40px;
+    border-radius: 10px;
+    background-color: rgb(6, 203, 108);
+    color: rgb(0, 0, 0);
+    color: white;
+}
+.ctk-button:hover{
+    background-color: aqua;
+    color: black;
+}
+
+
+
+
+
+.ctk-select-button{
+    float: right;
+    margin-right: 20px;
+}
+.ctk-select-tieude{
+    float: right;
+    margin-right: 60px;
+}
+.ctk-table{
+    width: 100%;
+    font-size: 20px;
+    border: 1px solid gainsboro;
+}
+tr, th, td{
+    border: 1px solid gainsboro;
+    text-align: center;
+}
+table{
+    text-align: center;
+}
+.all-bt-delete{
+    width: 60px;
+    height: 30px;
+    float: right;
+    background-color:coral;
+    border: solid chocolate 1px;
+
+}
+.all-bt-delete:hover{
+    background-color: red;
+}
+.td-tuychon{
+    width: 200px;
+}
+.bt-chamlai{
+    margin-left: 10px;
+    width: 80px;
+    height: 30px;
+    background-color: coral;
+    border: solid chocolate 1px;
+}
+.bt-chamlai:hover{
     background-color: red;
 }

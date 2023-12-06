@@ -118,7 +118,7 @@ const Qlthongtinnhanvien = () => {
                                         <td>{e.Quyenhang ? e.Quyenhang : '-'}</td>
                                         <td>
                                             <Link to={'/quanlythongtinnhanvien/Chinhsua/&idns=' + e.id} className='btn btn-info btn-sm me-2'> Chinh sua </Link>
-                                            <button className='btn btn-warning btn-sm' onClick={() => handleDelete(e.id)}> Xoa</button>
+                                            <button className='all-bt-delete' onClick={() => handleDelete(e.id)}> Xoa</button>
                                         </td>
                                     </tr>
                                 ))
@@ -159,9 +159,9 @@ const Qlthongtinnhanvien = () => {
                                         <td>{e.luong}</td>
                                         <td>{e.Tenchucvu ? e.Tenchucvu : '-'}</td>
                                         <td>{e.Quyenhang ? e.Quyenhang : '-'}</td>
-                                        <td>
+                                        <td className='td-tuychon'>
                                             <Link to={'/quanlythongtinnhanvien/Chinhsua/&idns=' + e.id} className='btn btn-info btn-sm me-2'> Chinh sua </Link>
-                                            <button className='btn btn-warning btn-sm' onClick={() => handleDelete(e.id)}> Xoa</button>
+                                            <button className='all-bt-delete' onClick={() => handleDelete(e.id)}> Xoa</button>
                                         </td>
                                     </tr>
                                 ))

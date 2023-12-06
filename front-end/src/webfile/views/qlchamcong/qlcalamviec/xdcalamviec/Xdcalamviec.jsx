@@ -47,9 +47,10 @@ const Xdcalamviec = () => {
                             <td>{e.Starttime}:h</td>
                             <td>{e.Endtime}:h</td>
                             <td>{e.Ngay}/{e.Thang}/{e.Nam}</td>
-                            <td>
+                            <td className='td-tuychon'>
                                 <Link to={'/quanlychamcong/quanlycalamviec/xaydungcalamviec/chinhsuacalamviec/&idcl='+ e._id} className='btn btn-info btn-sm me-2'>Chinh sua </Link>
-                                <button className='btn btn-warning btn-sm' onClick={() => handleDelete(e._id)}>Xoa</button>
+                                
+                                <button className='all-bt-delete' onClick={() => handleDelete(e._id)}>Xoa</button>
                             </td>
                         </tr>
                        })

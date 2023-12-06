@@ -132,8 +132,10 @@ const Bar = () => {
                 {UQuyenhang !== "0" ? null : captaikhoanslect()}
             </div>
             <div className="rightbar">
-                xin chao:{Uuser+" "}
-                <button onClick={handleSubmitLogout}>Logout</button>
+                <div className='text-username'>UserName:{Uuser+" "}
+                    <button className='bt-logout' onClick={handleSubmitLogout}>Logout</button>
+                </div>
+                
             </div>
         </div>
     );
