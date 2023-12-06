@@ -102,7 +102,7 @@ const Captaikhoan = () => {
             alert('Mật khẩu xác nhận không khớp.');
             return;
         }
-        else if (dataToSend.Quyentruyvan === ''|dataToSend.Quyentruyvan.endsWith(',')) {
+        else if (dataToSend.Quyentruyvan === ''|(/^,+$/.test(dataToSend.Quyentruyvan))) {
             alert('Chọn ít nhất một quyền truy vấn');
             return;
         }
@@ -155,7 +155,7 @@ const Captaikhoan = () => {
             alert('Mật khẩu xác nhận không khớp.');
             return;
         }
-        else if (dataToSend.Quyentruyvan === ''|dataToSend.Quyentruyvan.endsWith(',')) {
+        else if (dataToSend.Quyentruyvan === ''|(/^,+$/.test(dataToSend.Quyentruyvan))) {
             alert('Chọn ít nhất một quyền truy vấn');
             return;
         }
@@ -205,7 +205,7 @@ const Captaikhoan = () => {
                                                 <td>{ac.User}</td>
                                                 <td>{ac.Email}</td>
                                                 <td>{ac.Quyenhang}</td>
-                                                <td>{ac.Quyentruyvan.replace(/^,/, '')}</td>
+                                                <td>{ac.Quyentruyvan.replace(/,/g, ' ').replace(/\s+/g, ' ').trim()}</td>
                                                 <td className='td-tuychon'>
                                                     <button onClick={() => goitableedit(ac._id)} className='btn btn-info btn-sm me-2'>Chỉnh Sửa</button>
                                                     <button onClick={() => deleteaccount(ac._id)} className='all-bt-delete'>Xoa</button>
