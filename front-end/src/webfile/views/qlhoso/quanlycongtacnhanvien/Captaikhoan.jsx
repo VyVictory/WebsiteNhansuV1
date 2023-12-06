@@ -292,7 +292,7 @@ const Captaikhoan = () => {
                         </div>
                         <div className='ctk-child'>
                             <div className='ctk-tille'>
-                                <h2>Sửa Tài Khoản</h2>
+                                <h2>SỬA TÀI KHOẢN USER: {accounte.User}</h2>
                             </div>
                             <form id="myForm" onSubmit={suataikhoan}>
                             <div className='ctk-form'></div>
